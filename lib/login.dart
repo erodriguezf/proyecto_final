@@ -11,7 +11,7 @@ class Login extends StatelessWidget {
    
     //final acState = Provider.of<AccountState>(context);
     return MaterialApp(
-        title: "SchoolReady!",
+        title: "Me traes algo!",
         home: Scaffold(
           backgroundColor: const Color(0xff167F67),
           //resizeToAvoidBottomPadding: false,
@@ -28,23 +28,6 @@ class Islogged extends StatefulWidget {
 
 void _onpressedlogin(){}
 
-void setCustomErrorPage() {
-  ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails) {
-    print(flutterErrorDetails.toString());
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text("School Ready!"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Text("")],
-        ),
-      ),
-    );
-  };
-}
 
 class Isloggedstate extends State {
   bool rememberMe = false;
@@ -67,7 +50,7 @@ class Isloggedstate extends State {
                       Padding(
               padding: const EdgeInsets.fromLTRB(0, 75, 0, 0),
               child: Icon(
-                Icons.school,
+                Icons.store,
                 size: 100,
               ),
             ),
