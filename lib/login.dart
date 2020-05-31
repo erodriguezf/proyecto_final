@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 bool islogd;
 String usrn;
@@ -27,6 +28,10 @@ class Islogged extends StatefulWidget {
 }
 
 void _onpressedlogin(){}
+
+bool validate(String passw, String username){
+
+}
 
 
 class Isloggedstate extends State {
