@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AccountState with ChangeNotifier {
-  AccountState();
+class ControlEstados with ChangeNotifier {
+  ControlEstados();
 
   bool _isLogged = false;
   String _email;
