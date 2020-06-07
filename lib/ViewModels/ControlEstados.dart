@@ -7,27 +7,22 @@ class ControlEstados with ChangeNotifier {
 
   bool _isLogged = false;
   String _email;
-  String _username;
-  String _token;
   bool rememberme = false;
 
-  void setLoggedin(String usern, String token, bool log, bool remember) async {
+  void setLoggedin(String email,bool log, bool remember) async {
     String exist = "";
    // SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    exist = await sharedusernameget();
+    exist = await sharedemailget()??"";
     if (exist.length != 0) {
       _isLogged = await sharedLoggedget();
-      _username = await sharedusernameget();
-      _token = await sharedtokenget();
-    } else {
-      _token = token;
-      _username = usern;
+      _email = await sharedemailget();
+    } else {      
+      _email = email;
       _isLogged = log;
     }
     if (remember) {
-      sharedLoggedset(log);
-      sharedtokenset(token);
-      sharedusernameset(usern);
+      sharedLoggedset(log);      
+      sharedemailset(email);
     }
 
     notifyListeners();
@@ -35,16 +30,6 @@ class ControlEstados with ChangeNotifier {
 
   void setEmail(String email) {
     _email = email;
-    notifyListeners();
-  }
-
-  void setToken(String token) {
-    _token = token;
-    notifyListeners();
-  }
-
-  void setUsername(String username) {
-    _username = username;
     notifyListeners();
   }
 
@@ -67,17 +52,11 @@ class ControlEstados with ChangeNotifier {
 
   bool get getlogin => _isLogged;
   String get getEmail => _email;
-  String get getUsername => _username;
-  String get getToken => _token;
   bool get getrememberMe => rememberme;
-  Future<String> sharedtokenget() async {
-    SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    return sharedpref.getString("tokn");
-  }
 
-  Future<String> sharedusernameget() async {
+  Future<String> sharedemailget() async {
     SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    return sharedpref.getString("usrname");
+    return sharedpref.getString("email");
   }
 
   Future<bool> sharedLoggedget() async {
@@ -85,14 +64,9 @@ class ControlEstados with ChangeNotifier {
     return sharedpref.getBool("isloggeda") ?? false;
   }
 
-  Future<bool> sharedtokenset(String token) async {
+  Future<bool> sharedemailset(String username) async {
     SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    return sharedpref.setString("tokn", token);
-  }
-
-  Future<bool> sharedusernameset(String username) async {
-    SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    return sharedpref.setString("usrname", username);
+    return sharedpref.setString("email", username);
   }
 
   Future<bool> sharedLoggedset(bool log) async {

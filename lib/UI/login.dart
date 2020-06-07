@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto_final/UI/Home.dart';
 import 'package:proyecto_final/UI/Registro.dart';
+import 'package:proyecto_final/ViewModels/ControlEstados.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 var contextsc;
 bool islogd;
 String usrn;
@@ -10,14 +14,16 @@ String tokn;
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //final acState = Provider.of<AccountState>(context);
+     contextsc = context;
     return MaterialApp(
         title: "Me traes algo!",
         home: Scaffold(
           backgroundColor: const Color(0xff167F67),
           //resizeToAvoidBottomPadding: false,
 
-          body: Islogged(),
+          body: Provider.of<ControlEstados>(contextsc).getlogin
+              ? Home()
+              : Islogged(),
         ));
     //home: AcState.getlogin? Home():islogged());
   }
@@ -40,7 +46,7 @@ class Isloggedstate extends State {
   final _email = new TextEditingController();
   final _password = new TextEditingController();
   Widget build(BuildContext context) {
-    contextsc = context;
+    //contextsc = context;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -135,32 +141,36 @@ class Isloggedstate extends State {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
             child: Text("Sign Up"),
-            onPressed: () { Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Registrar()));},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Registrar()));
+            },
           ),
         ],
       ),
     );
-   
   }
-   void onpressedlogin() async {
-      AuthResult user;
-      try {
-        user = await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: _email.text, password: _password.text);
-      } catch (e) {
-        print(e.toString());
-      } finally {
-        if (user != null) { 
-          // sign in successful!
-          print("Ingreso exitoso");
-        } else {
-          // sign in unsuccessful
-          print('sign in Not');
-          // ex: prompt the user to try again
-        }
+
+  void onpressedlogin() async {
+    AuthResult user;
+    try {
+      user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email.text, password: _password.text);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      if (user != null) {
+        // sign in successful!
+        print("Ingreso exitoso");
+        Provider.of<ControlEstados>(context, listen: false)
+            .setLoggedin(_email.text, true, rememberMe);
+      } else {
+        // sign in unsuccessful
+        print('sign in Not');
+        // ex: prompt the user to try again
       }
     }
+  }
 
   Widget containerText(Widget widg) {
     return Container(
