@@ -26,18 +26,70 @@ class _HomeState extends State<Home> {
     contexth = context;
     return Scaffold(
       appBar:
-          AppBar(title: Text("School Ready!"), backgroundColor: Colors.black),
+          AppBar(title: Text("Home"), backgroundColor: Colors.black),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            MaterialButton(
-              child: Text('Amigos'),
-              onPressed: (){Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Amigos()));},
-            )
+        child: Container(
+                margin: const EdgeInsets.all(10.0),
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+
+                  Container(
+                        margin: const EdgeInsets.all(10.0), // exterior
+                        padding: const EdgeInsets.all(10.0), // interior
+                        color: Colors.deepOrange,
+                        alignment: Alignment.center,
+                        child: new Text("BingMe Somenting",
+                            style: new TextStyle(fontSize: 20.0)),
+                      ),
+
+                     //Spacer(),
+
+                     Expanded(
+                          flex: 4,
+                          child: Container(
+                            margin: const EdgeInsets.all(10.0), // exterior
+                            padding: const EdgeInsets.all(10.0), // interior
+                            color: Colors.deepOrange,
+                            alignment: Alignment.center,
+                            child: new Text("Mi Lista",
+                                style: new TextStyle(fontSize: 20.0)),
+                          )),
+
+                      //Spacer(),
+
+                      Expanded(
+                          flex: 4,
+                          child: Container(
+                            margin: const EdgeInsets.all(10.0), // exterior
+                            padding: const EdgeInsets.all(10.0), // interior
+                            color: Colors.deepOrange,
+                            alignment: Alignment.center,
+                            child: new Text("Amigos",
+                                style: new TextStyle(fontSize: 20.0)),
+                          )),
+
+                      //Spacer(),
+
+                       Expanded(
+                          flex: 4,
+                          child: Container(
+                            margin: const EdgeInsets.all(10.0), // exterior
+                            padding: const EdgeInsets.all(10.0), // interior
+                            color: Colors.deepOrange,
+                            alignment: Alignment.center,
+                            child: new Text("Opciones",
+                                style: new TextStyle(fontSize: 20.0)),
+                          )),
+
+
+            
+
           ],
         ),
+      ),
       ),
     );
   }
