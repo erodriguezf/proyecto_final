@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/UI/Registro.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+var contextsc;
 bool islogd;
 String usrn;
 String tokn;
@@ -9,7 +10,6 @@ String tokn;
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   
     //final acState = Provider.of<AccountState>(context);
     return MaterialApp(
         title: "Me traes algo!",
@@ -27,13 +27,6 @@ class Islogged extends StatefulWidget {
   Isloggedstate createState() => Isloggedstate();
 }
 
-void _onpressedlogin(){}
-
-bool validate(String passw, String username){
-
-}
-
-
 class Isloggedstate extends State {
   bool rememberMe = false;
   @override
@@ -47,19 +40,18 @@ class Isloggedstate extends State {
   final _email = new TextEditingController();
   final _password = new TextEditingController();
   Widget build(BuildContext context) {
+    contextsc = context;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-       
-                      Padding(
-              padding: const EdgeInsets.fromLTRB(0, 75, 0, 0),
-              child: Icon(
-                Icons.store,
-                size: 100,
-              ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 75, 0, 0),
+            child: Icon(
+              Icons.store,
+              size: 100,
             ),
-          
+          ),
           Form(
               key: _signUpfkey,
               child: SingleChildScrollView(
@@ -71,9 +63,8 @@ class Isloggedstate extends State {
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(35,25,35,25),
-                      child: containerText(
-                      Padding(
+                      padding: const EdgeInsets.fromLTRB(35, 25, 35, 25),
+                      child: containerText(Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
                           autofocus: true,
@@ -81,19 +72,23 @@ class Isloggedstate extends State {
                           controller: _email,
                           keyboardType: TextInputType.emailAddress,
                           decoration: new InputDecoration(
-                              labelText: "Email",labelStyle: TextStyle(color: Colors.white),
-                              hintText: "example@ejemplo.com",hintStyle:TextStyle(color: Colors.white),),
+                            labelText: "Email",
+                            labelStyle: TextStyle(color: Colors.white),
+                            hintText: "example@ejemplo.com",
+                            hintStyle: TextStyle(color: Colors.white),
+                          ),
                         ),
                       )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(35,25,35,25),
-                      child: containerText(
-                      Padding(
+                      padding: const EdgeInsets.fromLTRB(35, 25, 35, 25),
+                      child: containerText(Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
                           autofocus: true,
-                          decoration: new InputDecoration(labelText: "Password",labelStyle: TextStyle(color: Colors.white)),
+                          decoration: new InputDecoration(
+                              labelText: "Password",
+                              labelStyle: TextStyle(color: Colors.white)),
                           obscureText: true,
                           controller: _password,
                         ),
@@ -111,9 +106,9 @@ class Isloggedstate extends State {
                                 setState(() {
                                   rememberMe = rem;
                                 });
-                               
                               }),
-                          Text("Remember me",style: TextStyle(color: Colors.white))
+                          Text("Remember me",
+                              style: TextStyle(color: Colors.white))
                         ],
                       ),
                     ),
@@ -124,7 +119,7 @@ class Isloggedstate extends State {
                       child: Text("Log In!"),
                       onPressed: () {
                         if (isEmail(_email.value.text)) {
-                          _onpressedlogin();
+                          onpressedlogin();
                         } else {
                           Scaffold.of(context).showSnackBar(SnackBar(
                               content: Text('Invalid Email or password')));
@@ -136,30 +131,46 @@ class Isloggedstate extends State {
               )),
           Text("or"),
           RaisedButton(
-            shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                          color: Colors.white,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: Colors.white,
             child: Text("Sign Up"),
-            onPressed: () {
-              
-            },
+            onPressed: () { Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Registrar()));},
           ),
         ],
       ),
     );
-    
+   
   }
-Widget containerText(Widget widg) {
-      return Container(
-        margin: const EdgeInsets.all(2.0),
-        padding: const EdgeInsets.all(1.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 3.0),
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-        ),
-        child: widg,
-      );
+   void onpressedlogin() async {
+      AuthResult user;
+      try {
+        user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _email.text, password: _password.text);
+      } catch (e) {
+        print(e.toString());
+      } finally {
+        if (user != null) { 
+          // sign in successful!
+          print("Ingreso exitoso");
+        } else {
+          // sign in unsuccessful
+          print('sign in Not');
+          // ex: prompt the user to try again
+        }
+      }
     }
 
-
+  Widget containerText(Widget widg) {
+    return Container(
+      margin: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(1.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.white, width: 3.0),
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      ),
+      child: widg,
+    );
+  }
 }

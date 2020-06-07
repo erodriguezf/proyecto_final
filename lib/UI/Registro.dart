@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
 
 var globalContext;
 
-class registrar extends StatelessWidget {
+class Registrar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     globalContext = context;
@@ -17,37 +18,33 @@ class registrar extends StatelessWidget {
             backgroundColor: Colors.black,
             title: Text("Traeme algo!"),
           ),
-          body: registrarform(),
+          body: Registrarform(),
         ));
   }
 }
 
-class registrarform extends StatefulWidget {
+class Registrarform extends StatefulWidget {
   @override
-  registrarformState createState() {
-    return registrarformState();
+  RegistrarformState createState() {
+    return RegistrarformState();
   }
 }
 
-void _onpressedSignUp(
-    var context, String email, String _password, String userna, String nam) {
-}
 
-class registrarformState extends State {
+class RegistrarformState extends State {
+  final GlobalKey<FormState> _signUpfkey = GlobalKey<FormState>();
+  final _email = new TextEditingController();
+  final _password = new TextEditingController();
+  final _name = new TextEditingController();
+  final _username = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final _signUpfkey = GlobalKey<FormState>();
-    final _email = new TextEditingController();
-    final _password = new TextEditingController();
-    final _name = new TextEditingController();
-    final _username = new TextEditingController();
-
     return Form(
         key: _signUpfkey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text("SignUP!",
+            Text("Registrate!",
                 style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
@@ -63,45 +60,16 @@ class registrarformState extends State {
                   hintStyle: TextStyle(color: Colors.white),
                 ),
               ),
-            ),
+            ),            
             containerText(TextFormField(
-              autofocus: true,
-              controller: _username,
-              decoration: new InputDecoration(
-                labelText: "Username",
-                labelStyle: TextStyle(color: Colors.white),
-                hintText: "username",
-                hintStyle: TextStyle(color: Colors.white),
-              ),
-              validator: (value2) {
-                if (value2.isEmpty) {
-                  return 'Por favor ingrese algun texto';
-                }
-              },
-            )),
-            containerText(TextFormField(
-              autofocus: true,
-              controller: _name,
-              decoration: new InputDecoration(
-                labelText: "Name",
-                labelStyle: TextStyle(color: Colors.white),
-                hintText: "Name",
-                hintStyle: TextStyle(color: Colors.white),
-              ),
-              validator: (value3) {
-                if (value3.isEmpty) {
-                  return 'Por favor ingrese algun texto';
-                }
-              },
-            )),
-            containerText(TextFormField(
+              key: _signUpfkey,
               autofocus: true,
               controller: _password,
               decoration: new InputDecoration(
                   labelText: "Password",
                   labelStyle: TextStyle(color: Colors.white)),
               obscureText: true,
-              validator: (value4) {
+              validator: (String value4) {
                 if (value4.isEmpty) {
                   return 'Por favor ingrese algun texto';
                 }
@@ -114,12 +82,7 @@ class registrarformState extends State {
                   borderRadius: BorderRadius.circular(20)),
               onPressed: () {
                 if (isEmail(_email.value.text)) {
-                  _onpressedSignUp(
-                      context,
-                      _email.value.text,
-                      _password.value.text,
-                      _username.value.text,
-                      _name.value.text);
+                  onpressedregistar();
                 } else {
                   Scaffold.of(globalContext)
                       .showSnackBar(SnackBar(content: Text('Invalid Email')));
@@ -129,6 +92,17 @@ class registrarformState extends State {
             )
           ],
         ));
+  }
+
+  void onpressedregistar() async {
+    final AuthResult user = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: _email.text, password: _password.text);
+            if(user!=null){
+              Navigator.pop(context);
+              Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text('Registered')));
+            }
   }
 
   Widget containerText(Widget widg) {
