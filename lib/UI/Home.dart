@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
                             padding: const EdgeInsets.all(10.0), // interior
                             color: Colors.deepOrange,
                             alignment: Alignment.center,
-                            child: new Text("Amigos",
+                            child: new Text("Amigos1",
                                 style: new TextStyle(fontSize: 20.0)),
                           )),
 
