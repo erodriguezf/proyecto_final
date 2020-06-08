@@ -30,7 +30,13 @@ class AmigosState extends State<Amigos> {
            body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[           
+          children: <Widget>[   
+              RaisedButton(
+             onPressed: (){
+            Navigator.pop(context);
+          },
+        child: Text('salir'),
+        ),       
             Expanded(child: _list()),
             FloatingActionButton(
               backgroundColor: const Color(0xff167F67),
@@ -39,7 +45,9 @@ class AmigosState extends State<Amigos> {
                 },
                 tooltip: 'Add Course',
                 child: new Icon(Icons.add)),
+
           ],
+      
         ),
       ),
     );
