@@ -4,6 +4,8 @@ import 'package:proyecto_final/Models/Persona.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Agregar_Amigos.dart';
+
 var contexth;
 class Amigos extends StatefulWidget {
   @override
@@ -13,6 +15,10 @@ class Amigos extends StatefulWidget {
 class AmigosState extends State<Amigos> {
   List<Persona> amix = new List<Persona>();
   final acState = Provider.of<ControlEstados>(contextsc);
+  int i=0;
+  List<String> _products = [];
+  List<String> prod2 = ['Jean','José','Elkin','Nino','Otro'];
+  String name = '';
   @override
   void initState() {
     super.initState();
@@ -30,12 +36,17 @@ class AmigosState extends State<Amigos> {
            body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[        
+          children: <Widget>[ 
+          Expanded(child: Products(_products)),       
            // Expanded(child: _list()),
             FloatingActionButton(
               backgroundColor: const Color(0xff167F67),
                 onPressed: () {
-                  //_addNewCourse(context, acState.getUsername, acState.getToken);
+                  setState(() {
+                      name =prod2.elementAt(i).toString();
+                      _products.add('$name');
+                      i=i+1;
+                    });
                 },
                 tooltip: 'Add Course',
                 child: new Icon(Icons.add)),
