@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/UI/Amigos.dart';
+import 'package:proyecto_final/UI/MiLista.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,10 +33,40 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             MaterialButton(
+              child: Text('Mi lista'),
+              onPressed: (){
+                print("hola perro");
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => Amigos()));
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return new MiLista();
+                  }
+                ));
+              },
+            ),
+            MaterialButton(
               child: Text('Amigos'),
-              onPressed: (){Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Amigos()));},
-            )
+              onPressed: (){
+                print("hola perro");
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => Amigos()));
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return new Amigos();
+                  }
+                ));
+              },
+            ),
+            MaterialButton(
+              child: Text('Carrito'),
+              onPressed: (){
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => Amigos()));
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return new Amigos();
+                  }
+                ));
+              },
+            ),
           ],
         ),
       ),

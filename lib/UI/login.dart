@@ -5,6 +5,7 @@ import 'package:proyecto_final/UI/Registro.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:proyecto_final/Models/MultipleKeys.dart';
 
 var contextsc;
 bool islogd;
@@ -42,7 +43,7 @@ class Isloggedstate extends State {
 
   bool auxlog = true;
 
-  final _signUpfkey = GlobalKey<FormState>();
+  // final _signInfkey = GlobalKey<FormState>();
   final _email = new TextEditingController();
   final _password = new TextEditingController();
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class Isloggedstate extends State {
             ),
           ),
           Form(
-              key: _signUpfkey,
+              key: MultipleKeys.loginFormKey,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
