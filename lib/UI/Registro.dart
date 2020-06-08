@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/Models/MultipleKeys.dart';
 import 'package:string_validator/string_validator.dart';
 
 var globalContext;
@@ -32,7 +33,7 @@ class Registrarform extends StatefulWidget {
 
 
 class RegistrarformState extends State {
-  final GlobalKey<FormState> _signUpfkey = GlobalKey<FormState>();
+  //final GlobalKey<FormState> _signUpfkey = GlobalKey<FormState>();
   final _email = new TextEditingController();
   final _password = new TextEditingController();
   final _name = new TextEditingController();
@@ -40,7 +41,7 @@ class RegistrarformState extends State {
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _signUpfkey,
+        key: MultipleKeys.signUpFormKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -62,7 +63,7 @@ class RegistrarformState extends State {
               ),
             ),            
             containerText(TextFormField(
-              key: _signUpfkey,
+              key: MultipleKeys.signUpFormKey,
               autofocus: true,
               controller: _password,
               decoration: new InputDecoration(

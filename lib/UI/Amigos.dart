@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/Models/Persona.dart';
+import 'package:proyecto_final/UI/AgregarAmigo.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 var contexth;
+
 class Amigos extends StatefulWidget {
   @override
   AmigosState createState() => AmigosState();
@@ -25,19 +28,21 @@ class AmigosState extends State<Amigos> {
     final acState = Provider.of<ControlEstados>(context);
     contexth = context;
     return Scaffold(
-      appBar: AppBar(title: Text("School Ready!"),
-      backgroundColor: Colors.black),
-           body: Center(
+      appBar:
+          AppBar(title: Text("School Ready!"), backgroundColor: Colors.black),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[           
-            Expanded(child: _list()),
+          children: <Widget>[
+           // Expanded(child: _list()),
             FloatingActionButton(
-              backgroundColor: const Color(0xff167F67),
+                backgroundColor: const Color(0xff167F67),
                 onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AgregarAmigo()));
                   //_addNewCourse(context, acState.getUsername, acState.getToken);
                 },
-                tooltip: 'Add Course',
+                tooltip: 'Agregar amigo',
                 child: new Icon(Icons.add)),
           ],
         ),
@@ -47,22 +52,16 @@ class AmigosState extends State<Amigos> {
 
   Widget _list() {
     return ListView.builder(
-     // itemCount: coursesL.length,
-      itemBuilder: (context, posicion) {       
-        return Container(
-              color: Colors.white10,
-              alignment: AlignmentDirectional.centerStart,
-            //  child: CardCourse(coursesL[posicion]),
-                
-              );
-          //Icon(Icons.delete, color: Colors.white)),
-          
-       } );
-      }
-  
-
-
-
+        // itemCount: coursesL.length,
+        itemBuilder: (context, posicion) {
+      return Container(
+        color: Colors.white10,
+        alignment: AlignmentDirectional.centerStart,
+        //  child: CardCourse(coursesL[posicion]),
+      );
+      //Icon(Icons.delete, color: Colors.white)),
+    });
+  }
 }
 
 void sharedreflogoutset() async {

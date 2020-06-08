@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
             MaterialButton(
               child: Text('Amigos'),
               onPressed: (){Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Amigos()));},
+                  contexth, MaterialPageRoute(builder: (contexth) => Amigos()));},
             )
           ],
         ),
