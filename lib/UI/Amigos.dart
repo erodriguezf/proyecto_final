@@ -25,19 +25,13 @@ class AmigosState extends State<Amigos> {
     final acState = Provider.of<ControlEstados>(context);
     contexth = context;
     return Scaffold(
-      appBar: AppBar(title: Text("School Ready!"),
+      appBar: AppBar(title: Text("Amigos"),
       backgroundColor: Colors.black),
            body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[   
-              RaisedButton(
-             onPressed: (){
-            Navigator.pop(context);
-          },
-        child: Text('salir'),
-        ),       
-            Expanded(child: _list()),
+          children: <Widget>[        
+           // Expanded(child: _list()),
             FloatingActionButton(
               backgroundColor: const Color(0xff167F67),
                 onPressed: () {

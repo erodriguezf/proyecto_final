@@ -63,9 +63,9 @@ class _HomeState extends State<Home> {
 
                       Expanded(
                           flex: 4,
-                          child: Container(
-                            margin: const EdgeInsets.all(10.0), // exterior
-                            padding: const EdgeInsets.all(10.0),
+                          //child: Container(
+                            //margin: const EdgeInsets.all(10.0), // exterior
+                            //padding: const EdgeInsets.all(10.0),
                             child: RaisedButton(
                             color: Colors.deepOrange,
                              
@@ -83,7 +83,8 @@ class _HomeState extends State<Home> {
 
 
                             ),
-                          )),
+                          //)
+                          ),
 
                       //Spacer(),
 
