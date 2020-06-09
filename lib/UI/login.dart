@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto_final/Models/MultipleKeys.dart';
 import 'package:proyecto_final/UI/Home.dart';
 import 'package:proyecto_final/UI/Registro.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
@@ -42,7 +43,7 @@ class Isloggedstate extends State {
 
   bool auxlog = true;
 
-  final _signUpfkey = GlobalKey<FormState>();
+  //final _signUpfkey = GlobalKey<FormState>();
   final _email = new TextEditingController();
   final _password = new TextEditingController();
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class Isloggedstate extends State {
             ),
           ),
           Form(
-              key: _signUpfkey,
+              key: MultipleKeys.loginFormKey,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -91,7 +92,7 @@ class Isloggedstate extends State {
                       child: containerText(Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
-                          autofocus: true,
+                          autofocus: true, 
                           decoration: new InputDecoration(
                               labelText: "Password",
                               labelStyle: TextStyle(color: Colors.white)),

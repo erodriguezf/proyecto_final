@@ -87,6 +87,14 @@ class _HomeState extends State<Home> {
 
             
 
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            MaterialButton(
+              child: Text('Amigos'),
+              onPressed: (){Navigator.push(
+                  contexth, MaterialPageRoute(builder: (contexth) => Amigos()));},
+            )
           ],
         ),
       ),
