@@ -57,19 +57,3 @@ class Home extends StatelessWidget{
 
    }
 }
-
-Widget _row(BuildContext context, String text, Widget destination) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RaisedButton(
-              onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => destination),
-                    )
-                  },
-              child: Text(text)),
-          SizedBox(height: 20.0)
-        ]);
-  }

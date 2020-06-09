@@ -5,6 +5,8 @@ import 'package:proyecto_final/UI/login.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Amigos.dart';
+import 'Lista.dart';
+
 
 var contexth;
 
@@ -50,16 +52,29 @@ class _HomeState extends State<Home> {
 
                      Expanded(
                           flex: 4,
-                          child: Container(
-                            margin: const EdgeInsets.all(10.0), // exterior
-                            padding: const EdgeInsets.all(10.0), // interior
+                           child: MaterialButton(
                             color: Colors.deepOrange,
-                            alignment: Alignment.center,
-                            child: new Text("Mi Lista",
-                                style: new TextStyle(fontSize: 20.0)),
-                          )),
+                             
+                                 onPressed: () => {
+                                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>Lista()),
+                    ),
+                          
+                          },
 
-                      //Spacer(),
+
+                          child: new Text("Mi Lista1",
+                                style: new TextStyle(fontSize: 20.0),
+                                ),
+
+
+                            ),
+
+                         
+                          ),
+
+                      Spacer(),
 
                       Expanded(
                           flex: 4,
@@ -77,7 +92,7 @@ class _HomeState extends State<Home> {
                           
                           },
 
-                          child: new Text("Amigos",
+                          child: new Text("Amigos2",
                                 style: new TextStyle(fontSize: 20.0),
                                 ),
 
