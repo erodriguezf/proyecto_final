@@ -35,13 +35,45 @@ class DatabaseThings {
     }
   }
 
+  Future<bool> crearConversacion(mapconversacion, String documentconversacion) {
+    Firestore.instance
+        .collection("conversaciones")
+        .document(documentconversacion)
+        .setData(mapconversacion)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+    getMensajes(String chatRoomId) async{
+    return Firestore.instance
+        .collection("conversaciones")
+        .document(chatRoomId)
+        .collection("chats")
+        .orderBy("fecha")
+        .snapshots();
+  }
+
+  Future<void> enviarMensaje(String chatRoomId, chatMessageData){
+
+    Firestore.instance.collection("conversaciones")
+        .document(chatRoomId)
+        .collection("chats")
+        .add(chatMessageData).catchError((e){
+          print(e.toString());
+    });
+  }
+
+
+
   Future getAmigosdelogueado(String docu) async {
-
-
+    try{
     return Firestore.instance.collection('usuarios').document(docu).get();
+    }catch(e){}
   }
 
   Future getInfoUsuario(String email) async {
+    try{
     return Firestore.instance
         .collection("usuarios")
         .where("email", isEqualTo: email)
@@ -49,6 +81,7 @@ class DatabaseThings {
         .catchError((e) {
       print(e.toString());
     });
+    }catch(e){}
   }
 
   agregarAmigo(String currentuser, String email, String nombre) {

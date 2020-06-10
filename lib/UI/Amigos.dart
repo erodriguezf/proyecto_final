@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_final/Models/Persona.dart';
 import 'package:proyecto_final/UI/AgregarAmigo.dart';
 import 'package:proyecto_final/UI/ListaDeAmigos.dart';
+import 'package:proyecto_final/UI/NavDrawer.dart';
 
 
 var contexth;
@@ -19,6 +20,7 @@ class AmigosState extends State<Amigos> {
   Widget build(BuildContext context) {    
     contexth = context;
     return Scaffold(
+      drawer: NavDrawer(),
       appBar:
           AppBar(title: Text("Traeme algo!"), backgroundColor: Colors.red[400]),
       body: Center(

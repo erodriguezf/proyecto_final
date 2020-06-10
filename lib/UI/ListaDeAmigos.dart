@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/Models/Persona.dart';
 import 'package:proyecto_final/Services/FireDatabase.dart';
 import 'package:proyecto_final/Services/RequestStructure.dart';
 import 'package:proyecto_final/UI/AmigoCard.dart';
+import 'package:proyecto_final/UI/NavDrawer.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
 
@@ -15,15 +15,12 @@ class ListaDeAmigos extends StatefulWidget {
 
 class ListaDeAmigosState extends State<ListaDeAmigos> {
   List<Persona> resbusqueda = new List<Persona>();
-  List<dynamic> resami;
-  List<AmigoInfo> friendList;
-  QuerySnapshot snapbusq;
-  QuerySnapshot amifDB;
+  List<dynamic> resami = new List<dynamic>();
+  List<AmigoInfo> friendList = new List<AmigoInfo>();
   DatabaseThings fireDB = new DatabaseThings();
-  DocumentSnapshot amigos;
   bool encontrado = false;
   TextEditingController busqueda = new TextEditingController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -34,44 +31,39 @@ class ListaDeAmigosState extends State<ListaDeAmigos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar:
           AppBar(title: Text("Traeme algo!"), backgroundColor: Colors.red[400]),
       body: Column(
-        children:  [_listAmigos(),
-          Container(
-              color: Colors.black26,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Column(
-                children: <Widget>[],
-              )),
+        children: [
+          _listAmigos(),
         ],
       ),
     );
   }
 
   buscarListadeAmigos(String email) async {
+    try{
     fireDB.getInfoUsuario(email).then((logDB) {
-      //amifDB = ;
-      fireDB.getAmigosdelogueado(logDB.documents[0].documentID).then((resam) {
+      fireDB.getAmigosdelogueado(logDB.documents[0].documentID??" ").then((resam) {
         setState(() {
           print("aaa" + resam.data["amigos"].toString());
           resami = resam.data["amigos"];
-          friendList = resami.map((e) => AmigoInfo.fromJson(e)).toList();          
+          friendList = resami.map((e) => AmigoInfo.fromJson(e)).toList();
           print(resami.toString());
-          print("friends::: "+friendList.toString());
+          print("friends::: " + friendList.toString());
         });
       });
     });
-
+    }catch(e){}
   }
 
   Widget _listAmigos() {
-    return ListView.builder(
-            shrinkWrap: true,
-            itemCount: friendList.length,
-            itemBuilder: (context, posicion) {
-              return AmigoCard(friendList[posicion]);
-            });
-        
+    return friendList.length != null? ListView.builder(
+        shrinkWrap: true,
+        itemCount: friendList.length??0,
+        itemBuilder: (context, posicion) {
+          return AmigoCard(friendList[posicion]);
+        }):Container();
   }
 }

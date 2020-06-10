@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto_final/Services/FireDatabase.dart';
@@ -8,23 +7,23 @@ class AgregarAmigoCard extends StatefulWidget {
   final String username;
   final String email;
   final String selectedid;
-  AgregarAmigoCard(this.nombre, this.username, this.selectedid,this.email);
+  AgregarAmigoCard(this.nombre, this.username, this.selectedid, this.email);
   @override
-  AgregarAmigoCardState createState() =>
-      AgregarAmigoCardState(this.nombre, this.username, this.selectedid,this.email);
+  AgregarAmigoCardState createState() => AgregarAmigoCardState(
+      this.nombre, this.username, this.selectedid, this.email);
 }
 
 class AgregarAmigoCardState extends State<AgregarAmigoCard> {
-  String nombre;
-  String email;
-  String username;
-  String selectedid;
-  String logueadoEmail;
-  String logueadoIDoc;
-  QuerySnapshot logUSDB;
+  String nombre = "";
+  String email = "";
+  String username = "";
+  String selectedid = "";
+  String logueadoEmail = "";
+  String logueadoIDoc = "";
   DatabaseThings fireDB = new DatabaseThings();
 
-  AgregarAmigoCardState(this.nombre, this.username, this.selectedid,this.email);
+  AgregarAmigoCardState(
+      this.nombre, this.username, this.selectedid, this.email);
   @override
   Widget build(BuildContext context) {
     bool agregado = false;
@@ -61,16 +60,14 @@ class AgregarAmigoCardState extends State<AgregarAmigoCard> {
                     onPressed: () {
                       fireDB.getUsuarioLogueado().then((us) {
                         logueadoEmail = us.email;
-                      
-                     });
-                      fireDB.getInfoUsuario(logueadoEmail).then((logDB){
-                        logUSDB = logDB;
+                      });
+                      fireDB.getInfoUsuario(logueadoEmail).then((logDB) {
+                        fireDB.agregarAmigo(
+                            logDB.documents[0].documentID ?? "", email, nombre);
                       });
 
-                       fireDB.agregarAmigo(logUSDB.documents[0].documentID, email, nombre);
-                      
                       setState(() {
-                        Text("added");
+                        Text("agregado");
                       });
                     },
                     child: agregado ? Text("Agregado") : Text("Agregar"),

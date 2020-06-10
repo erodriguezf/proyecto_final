@@ -14,7 +14,7 @@ class Registrar extends StatelessWidget {
     return MaterialApp(
         title: "Traeme algo!",
         home: Scaffold(
-          backgroundColor: const Color(0xff167F67),
+          backgroundColor: Colors.red[400],
           resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             backgroundColor: Colors.black,

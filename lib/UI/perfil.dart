@@ -51,7 +51,7 @@ class AmigoPerfilstate extends State<AmigoPerfil> {
               children: <Widget>[
                 Icon(Icons.person),
                 Text(
-                 "Nombre de usuario: " + nombredeusuario,
+                 "Usuario: " + nombredeusuario,
                   style: TextStyle(fontSize: 21),
                 )
               ],
@@ -82,7 +82,7 @@ class AmigoPerfilstate extends State<AmigoPerfil> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.fromLTRB(10,10,0,150),
             child: Row(
               children: <Widget>[
                 Icon(Icons.date_range),
@@ -126,7 +126,7 @@ class AmigoPerfilstate extends State<AmigoPerfil> {
         children: <Widget>[
           new Center(
             child: new Container(
-              margin: EdgeInsets.only(bottom: 5.0),
+              margin: EdgeInsets.only(bottom: 30.0),
               height: 20.0,
               width: 80.0,
             ),
@@ -136,7 +136,7 @@ class AmigoPerfilstate extends State<AmigoPerfil> {
             style: TextStyle(color: Colors.white, fontSize: 25),
           ),
           Icon(
-            Icons.school,
+            Icons.store,
             size: 100,
             color: Colors.white,
           ),
