@@ -31,16 +31,17 @@ class Home extends StatelessWidget{
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-
-
-              Container(
+                
+                  Container(
                     margin: const EdgeInsets.all(10.0),  // exterior
                     padding: const EdgeInsets.all(10.0),  // interior
                     color: Colors.deepOrange,
                     alignment: Alignment.center,
-                    child: new Text("Papaya", style: new TextStyle(fontSize: 20.0)),
-                  ),
-
+                    child: new Text("Platano", style: new TextStyle(fontSize: 20.0)),
+                   ),
+                  
+          
+             
                   Container(
                     margin: const EdgeInsets.all(10.0),  // exterior
                     padding: const EdgeInsets.all(10.0),  // interior
@@ -64,15 +65,25 @@ class Home extends StatelessWidget{
                     alignment: Alignment.center,
                     child: new Text("Total: ", style: new TextStyle(fontSize: 20.0)),
                    ),
-
-                  
-                  RaisedButton(
+                   
+                   RaisedButton(
                     //margin: const EdgeInsets.all(10.0),  // exterior
                     padding: const EdgeInsets.all(10.0),  // interior
                     color: Colors.deepOrange,
                     //alignment: Alignment.center,
                     child: new Text("Agregar ", style: new TextStyle(fontSize: 20.0)),
                    ),
+
+                   RaisedButton(
+                    //margin: const EdgeInsets.all(10.0),  // exterior
+                    padding: const EdgeInsets.all(10.0),  // interior
+                    color: Colors.deepOrange,
+                    //alignment: Alignment.center,
+                    child: new Text("Actualizar y volver ", style: new TextStyle(fontSize: 20.0)),
+                   ),
+                  
+                  
+                  
                   
           
                   
