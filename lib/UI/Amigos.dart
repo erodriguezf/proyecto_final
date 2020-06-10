@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:proyecto_final/Models/Persona.dart';
 import 'package:proyecto_final/UI/AgregarAmigo.dart';
-import 'package:proyecto_final/UI/login.dart';
-import 'package:proyecto_final/ViewModels/ControlEstados.dart';
+import 'package:proyecto_final/UI/ListaDeAmigos.dart';
+
 
 var contexth;
 
@@ -14,13 +13,7 @@ class Amigos extends StatefulWidget {
 
 class AmigosState extends State<Amigos> {
   List<Persona> amix = new List<Persona>();
-  final acState = Provider.of<ControlEstados>(contextsc);
-  @override
-  void initState() {
-    super.initState();
-    acState.getlogin ? Amigos() : Islogged();
-    
-  }
+
 
   @override
   Widget build(BuildContext context) {    
@@ -60,7 +53,7 @@ class AmigosState extends State<Amigos> {
                     heroTag: "btn2",
                       backgroundColor: Colors.red[400],
                       onPressed: () {
-                        //Navigator.push(context,MaterialPageRoute(builder: (context) => AgregarAmigo()));                      
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => ListaDeAmigos()));                      
                       },
                       tooltip: 'Lista de amigos',
                       child: new Icon(Icons.person)),

@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto_final/Models/MultipleKeys.dart';
 import 'package:proyecto_final/Services/FireAuth.dart';
 import 'package:proyecto_final/Services/FireDatabase.dart';
-import 'package:proyecto_final/Services/RequestStructure.dart';
 import 'package:string_validator/string_validator.dart';
 
 var globalContext;
@@ -126,11 +124,6 @@ class RegistrarformState extends State {
                   labelText: "Password",
                   labelStyle: TextStyle(color: Colors.white)),
               obscureText: true,
-              validator: (String value4) {
-                if (value4.isEmpty) {
-                  return 'Por favor ingrese algun texto';
-                }
-              },
             )),
             RaisedButton(
               child: Text("Registrar!"),
@@ -152,7 +145,6 @@ class RegistrarformState extends State {
   }
 
   void onpressedregistar() async {
-    bool resp = false;
     if (_password.text.length >= 6) {
       Map<String, String> mapadeluser = {
         "edad": _age.text,

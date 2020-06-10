@@ -19,7 +19,7 @@ class Login extends StatelessWidget {
     return MaterialApp(
         title: "Me traes algo!",
         home: Scaffold(
-          backgroundColor: const Color(0xff167F67),
+          backgroundColor: Colors.red[400],
           //resizeToAvoidBottomPadding: false,
 
           body: Provider.of<ControlEstados>(contextsc).getlogin
@@ -56,7 +56,7 @@ class Isloggedstate extends State {
             padding: const EdgeInsets.fromLTRB(0, 75, 0, 0),
             child: Icon(
               Icons.store,
-              size: 100,
+              size: 100,color: Colors.white,
             ),
           ),
           Form(
@@ -107,7 +107,7 @@ class Isloggedstate extends State {
                         children: <Widget>[
                           Checkbox(
                               activeColor: Colors.white,
-                              checkColor: Colors.green,
+                              checkColor: Colors.red[400],
                               value: rememberMe,
                               onChanged: (bool rem) {
                                 setState(() {

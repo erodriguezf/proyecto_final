@@ -21,8 +21,7 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final acState = Provider.of<ControlEstados>(context);
+  Widget build(BuildContext context) {  
     contexth = context;
     return Scaffold(
       appBar:

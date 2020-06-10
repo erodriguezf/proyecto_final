@@ -13,9 +13,10 @@ class _AgregarAmigoState extends State<AgregarAmigo> {
   List<Persona> resbusqueda = new List<Persona>();
   QuerySnapshot snapbusq;
   bool encontrado = false;
+  DatabaseThings fireDB = new DatabaseThings();
   TextEditingController busqueda = new TextEditingController();
   @override
-  DatabaseThings fireDB = new DatabaseThings();
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseThings {
+  QuerySnapshot logUSDB;
+  DocumentSnapshot amigos;
   Future buscarporNombre(String nombre) async {
     return await Firestore.instance
         .collection("usuarios")
@@ -9,17 +11,20 @@ class DatabaseThings {
         .getDocuments();
   }
 
-   Future<FirebaseUser> getUsuarioLogueado() async {
+  Future<FirebaseUser> getUsuarioLogueado() async {
     final user = await FirebaseAuth.instance.currentUser();
     return user;
   }
 
-   Future<DocumentSnapshot> getCurrentUserFromFS(
-      FirebaseUser user) async {
+  Future<DocumentSnapshot> getCurrentUserFromFS() async {
+    final user = await FirebaseAuth.instance.currentUser();
     try {
       if (user != null) {
         print("user id is ${user.uid}");
-        return Firestore.instance.collection('users').document(user.uid).get();
+        return Firestore.instance
+            .collection('usuarios')
+            .document(user.uid)
+            .get();
       } else {
         print("user is null");
         return null;
@@ -28,6 +33,12 @@ class DatabaseThings {
       print(e);
       return null;
     }
+  }
+
+  Future getAmigosdelogueado(String docu) async {
+
+
+    return Firestore.instance.collection('usuarios').document(docu).get();
   }
 
   Future getInfoUsuario(String email) async {
@@ -41,25 +52,14 @@ class DatabaseThings {
   }
 
   agregarAmigo(String currentuser, String email, String nombre) {
-
-    Firestore.instance.collection("usuarios").document(currentuser).setData(
-      {"amigos": [
-        {
-          "email": email,
-          "nombre": nombre
-        }
-
+    Firestore.instance.collection("usuarios").document(currentuser).setData({
+      "amigos": [
+        {"email": email, "nombre": nombre}
       ]
-      },merge: true).then((value){
-        print("agregado");
-      });
-      
-
-    
-       
-     
-    }
-  
+    }, merge: true).then((value) {
+      print("agregado");
+    });
+  }
 
   subirinfoUsuario(Map<String, dynamic> mapadeusuario) {
     Firestore.instance

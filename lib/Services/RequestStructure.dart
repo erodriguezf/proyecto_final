@@ -32,13 +32,13 @@ class UsuarioInfo {
 
 class AmigoInfo {
   final String email;
-  final String name;
-  AmigoInfo({this.email, this.name});
+  final String nombre;
+  AmigoInfo({this.email, this.nombre});
 
   factory AmigoInfo.fromJson(Map<String, dynamic> json) {
     return AmigoInfo(
       email: json['email'],
-      name: json['name'],
+      nombre: json['nombre'],
     );
   }
 }
