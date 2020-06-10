@@ -37,23 +37,7 @@ _ChatState(this.idconversacion, this.logemail);
     );
   }
 
-  enviarmensajebtn() {
-    if (mensajeaenviar.text.isNotEmpty) {
-      Map<String, dynamic> mapmensaje = {
-        "enviadopor": logemail,
-        "mensaje": mensajeaenviar.text,
-        "fecha": DateTime
-            .now()
-            .millisecondsSinceEpoch,
-      };
 
-      fireDB.enviarMensaje(idconversacion, mapmensaje);
-
-      setState(() {
-        mensajeaenviar.text = "";
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -110,6 +94,23 @@ _ChatState(this.idconversacion, this.logemail);
         ),
       ),
     );
+  }
+    enviarmensajebtn() {
+    if (mensajeaenviar.text.isNotEmpty) {
+      Map<String, dynamic> mapmensaje = {
+        "enviadopor": logemail,
+        "mensaje": mensajeaenviar.text,
+        "fecha": DateTime
+            .now()
+            .millisecondsSinceEpoch,
+      };
+
+      fireDB.enviarMensaje(idconversacion, mapmensaje);
+
+      setState(() {
+        mensajeaenviar.text = "";
+      });
+    }
   }
 
 }

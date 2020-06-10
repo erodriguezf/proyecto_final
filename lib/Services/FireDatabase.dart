@@ -35,7 +35,7 @@ class DatabaseThings {
     }
   }
 
-  Future<bool> crearConversacion(mapconversacion, String documentconversacion) {
+  Future crearConversacion(mapconversacion, String documentconversacion) {
     Firestore.instance
         .collection("conversaciones")
         .document(documentconversacion)
@@ -45,7 +45,7 @@ class DatabaseThings {
     });
   }
 
-    getMensajes(String chatRoomId) async{
+  getMensajes(String chatRoomId) async {
     return Firestore.instance
         .collection("conversaciones")
         .document(chatRoomId)
@@ -54,44 +54,42 @@ class DatabaseThings {
         .snapshots();
   }
 
-  Future<void> enviarMensaje(String chatRoomId, chatMessageData){
-
-    Firestore.instance.collection("conversaciones")
+  Future enviarMensaje(String chatRoomId, chatMessageData) {
+    Firestore.instance
+        .collection("conversaciones")
         .document(chatRoomId)
         .collection("chats")
-        .add(chatMessageData).catchError((e){
-          print(e.toString());
-    });
-  }
-
-
-
-  Future getAmigosdelogueado(String docu) async {
-    try{
-    return Firestore.instance.collection('usuarios').document(docu).get();
-    }catch(e){}
-  }
-
-  Future getInfoUsuario(String email) async {
-    try{
-    return Firestore.instance
-        .collection("usuarios")
-        .where("email", isEqualTo: email)
-        .getDocuments()
+        .add(chatMessageData)
         .catchError((e) {
       print(e.toString());
     });
-    }catch(e){}
+  }
+
+  Future getAmigosdelogueado(String docu) async {
+    try {
+      return Firestore.instance.collection('usuarios').document(docu).get();
+    } catch (e) {}
+  }
+
+  Future getInfoUsuario(String email) async {
+    try {
+      return Firestore.instance
+          .collection("usuarios")
+          .where("email", isEqualTo: email)
+          .getDocuments()
+          .catchError((e) {
+        print(e.toString());
+      });
+    } catch (e) {}
   }
 
   agregarAmigo(String currentuser, String email, String nombre) {
-    Firestore.instance.collection("usuarios").document(currentuser).setData({
-      "amigos": [
-        {"email": email, "nombre": nombre}
-      ]
-    }, merge: true).then((value) {
-      print("agregado");
+    Firestore.instance.collection("usuarios").document(currentuser).updateData({
+      "amigos": FieldValue.arrayUnion([
+        {"email": email, "nombre": nombre}        
+      ])
     });
+      print("agregado");    
   }
 
   subirinfoUsuario(Map<String, dynamic> mapadeusuario) {
