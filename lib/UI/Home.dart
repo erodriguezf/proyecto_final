@@ -21,71 +21,20 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final acState = Provider.of<ControlEstados>(context);
+  Widget build(BuildContext context) {  
     contexth = context;
     return Scaffold(
       appBar:
           AppBar(title: Text("Home"), backgroundColor: Colors.black),
       body: Center(
-        child: Container(
-                margin: const EdgeInsets.all(10.0),
-                alignment: Alignment.center,
-                color: Colors.white,
-                child: new Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-
-                  Container(
-                        margin: const EdgeInsets.all(10.0), // exterior
-                        padding: const EdgeInsets.all(10.0), // interior
-                        color: Colors.deepOrange,
-                        alignment: Alignment.center,
-                        child: new Text("BingMe Somenting",
-                            style: new TextStyle(fontSize: 20.0)),
-                      ),
-
-                     //Spacer(),
-
-                     Expanded(
-                          flex: 4,
-                          child: Container(
-                            margin: const EdgeInsets.all(10.0), // exterior
-                            padding: const EdgeInsets.all(10.0), // interior
-                            color: Colors.deepOrange,
-                            alignment: Alignment.center,
-                            child: new Text("Mi Lista",
-                                style: new TextStyle(fontSize: 20.0)),
-                          )),
-
-                      //Spacer(),
-
-                      Expanded(
-                          flex: 4,
-                          child: Container(
-                            margin: const EdgeInsets.all(10.0), // exterior
-                            padding: const EdgeInsets.all(10.0), // interior
-                            color: Colors.deepOrange,
-                            alignment: Alignment.center,
-                            child: new Text("Amigos1",
-                                style: new TextStyle(fontSize: 20.0)),
-                          )),
-
-                      //Spacer(),
-
-                       Expanded(
-                          flex: 4,
-                          child: Container(
-                            margin: const EdgeInsets.all(10.0), // exterior
-                            padding: const EdgeInsets.all(10.0), // interior
-                            color: Colors.deepOrange,
-                            alignment: Alignment.center,
-                            child: new Text("Opciones",
-                                style: new TextStyle(fontSize: 20.0)),
-                          )),
-
-
-            
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            MaterialButton(
+              child: Text('Amigos'),
+              onPressed: (){Navigator.push(
+                  contexth, MaterialPageRoute(builder: (contexth) => Amigos()));},
+            )
 
           ],
         ),

@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/Models/MultipleKeys.dart';
+import 'package:proyecto_final/Services/FireAuth.dart';
+import 'package:proyecto_final/Services/FireDatabase.dart';
 import 'package:string_validator/string_validator.dart';
 
 var globalContext;
@@ -12,7 +14,7 @@ class Registrar extends StatelessWidget {
     return MaterialApp(
         title: "Traeme algo!",
         home: Scaffold(
-          backgroundColor: const Color(0xff167F67),
+          backgroundColor: Colors.red[400],
           resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             backgroundColor: Colors.black,
@@ -30,17 +32,20 @@ class Registrarform extends StatefulWidget {
   }
 }
 
-
 class RegistrarformState extends State {
-  final GlobalKey<FormState> _signUpfkey = GlobalKey<FormState>();
+  //final GlobalKey<FormState> _signUpfkey = GlobalKey<FormState>();
+  FireAuth fireReg = new FireAuth();
+  DatabaseThings fireDB = new DatabaseThings();
   final _email = new TextEditingController();
   final _password = new TextEditingController();
   final _name = new TextEditingController();
   final _username = new TextEditingController();
+  final _city = new TextEditingController();
+  final _age = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _signUpfkey,
+        key: MultipleKeys.signUpFormKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -53,6 +58,7 @@ class RegistrarformState extends State {
               TextFormField(
                 autofocus: true,
                 controller: _email,
+                keyboardType: TextInputType.emailAddress,
                 decoration: new InputDecoration(
                   labelText: "Email",
                   labelStyle: TextStyle(color: Colors.white),
@@ -60,20 +66,64 @@ class RegistrarformState extends State {
                   hintStyle: TextStyle(color: Colors.white),
                 ),
               ),
-            ),            
+            ),
+            containerText(
+              TextFormField(
+                autofocus: true,
+                controller: _name,
+                decoration: new InputDecoration(
+                  labelText: "Nombre",
+                  labelStyle: TextStyle(color: Colors.white),
+                  hintText: "nombre",
+                  hintStyle: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            containerText(
+              TextFormField(
+                autofocus: true,
+                controller: _username,
+                decoration: new InputDecoration(
+                  labelText: "Nombre de usuario",
+                  labelStyle: TextStyle(color: Colors.white),
+                  hintText: "nomobre112",
+                  hintStyle: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            containerText(
+              TextFormField(
+                autofocus: true,
+                controller: _age,
+                keyboardType: TextInputType.number,
+                decoration: new InputDecoration(
+                  labelText: "Edad",
+                  labelStyle: TextStyle(color: Colors.white),
+                  hintText: "56",
+                  hintStyle: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            containerText(
+              TextFormField(
+                autofocus: true,
+                controller: _city,
+                decoration: new InputDecoration(
+                  labelText: "Ciudad",
+                  labelStyle: TextStyle(color: Colors.white),
+                  hintText: "Barranquilla",
+                  hintStyle: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
             containerText(TextFormField(
-              key: _signUpfkey,
+              key: MultipleKeys.signUpFormKey,
               autofocus: true,
               controller: _password,
               decoration: new InputDecoration(
                   labelText: "Password",
                   labelStyle: TextStyle(color: Colors.white)),
               obscureText: true,
-              validator: (String value4) {
-                if (value4.isEmpty) {
-                  return 'Por favor ingrese algun texto';
-                }
-              },
             )),
             RaisedButton(
               child: Text("Registrar!"),
@@ -85,7 +135,7 @@ class RegistrarformState extends State {
                   onpressedregistar();
                 } else {
                   Scaffold.of(globalContext)
-                      .showSnackBar(SnackBar(content: Text('Invalid Email')));
+                      .showSnackBar(SnackBar(content: Text('Email invalido')));
                 }
                 Navigator.pop(globalContext);
               },
@@ -95,14 +145,28 @@ class RegistrarformState extends State {
   }
 
   void onpressedregistar() async {
-    final AuthResult user = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: _email.text, password: _password.text);
-            if(user!=null){
-              Navigator.pop(context);
-              Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Registered')));
-            }
+    if (_password.text.length >= 6) {
+      Map<String, String> mapadeluser = {
+        "edad": _age.text,
+        "Nombre de usuario": _username.text,
+        "nombre": _name.text,
+        "email": _email.text,
+        "ciudad": _city.text
+      };
+      fireReg
+          .registrarNuevoUsuario(_email.text, _password.text, context)
+          .then((res) {
+        if (res != null) {
+          fireDB.subirinfoUsuario(mapadeluser);
+          Navigator.pop(context);
+          print("registro exitoso");
+        } else {
+          print("error en el registro");
+        }
+      });
+    } else {
+      print("contraseña debe ser de minimo 6 caracteres");
+    }
   }
 
   Widget containerText(Widget widg) {
