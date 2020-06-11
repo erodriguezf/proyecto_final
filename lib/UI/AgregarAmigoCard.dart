@@ -63,7 +63,7 @@ class AgregarAmigoCardState extends State<AgregarAmigoCard> {
                       });
                       fireDB.getInfoUsuario(logueadoEmail).then((logDB) {
                         fireDB.agregarAmigo(
-                            logDB.documents[0].documentID ?? "", email, nombre);
+                            logDB.documents[0].documentID?? "", email, nombre);
                       });
 
                       setState(() {

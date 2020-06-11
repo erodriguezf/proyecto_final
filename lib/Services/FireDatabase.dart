@@ -15,24 +15,9 @@ class DatabaseThings {
     final user = await FirebaseAuth.instance.currentUser();
     return user;
   }
-
-  Future<DocumentSnapshot> getCurrentUserFromFS() async {
+    Future<String> getEmailLogueado() async {
     final user = await FirebaseAuth.instance.currentUser();
-    try {
-      if (user != null) {
-        print("user id is ${user.uid}");
-        return Firestore.instance
-            .collection('usuarios')
-            .document(user.uid)
-            .get();
-      } else {
-        print("user is null");
-        return null;
-      }
-    } catch (e) {
-      print(e);
-      return null;
-    }
+    return user.email;
   }
 
   Future crearConversacion(mapconversacion, String documentconversacion) {
@@ -43,6 +28,13 @@ class DatabaseThings {
         .catchError((e) {
       print(e);
     });
+  }
+
+  Future buscarPublicaciones(String nombre) async {
+    return await Firestore.instance
+        .collection("publicaciones")
+        .where('NombreCreador', isEqualTo: nombre)
+        .getDocuments();
   }
 
   getMensajes(String chatRoomId) async {
@@ -83,13 +75,20 @@ class DatabaseThings {
     } catch (e) {}
   }
 
+  tomarPedido(String email, String publicacion) {
+    Firestore.instance
+        .collection("publicaciones")
+        .document(publicacion)
+        .updateData({"mandadero": email});
+  }
+
   agregarAmigo(String currentuser, String email, String nombre) {
     Firestore.instance.collection("usuarios").document(currentuser).updateData({
       "amigos": FieldValue.arrayUnion([
-        {"email": email, "nombre": nombre}        
+        {"email": email, "nombre": nombre}
       ])
     });
-      print("agregado");    
+    print("agregado");
   }
 
   subirinfoUsuario(Map<String, dynamic> mapadeusuario) {

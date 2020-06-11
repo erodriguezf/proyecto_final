@@ -4,7 +4,7 @@ class UsuarioInfo {
   final String name;
   final String city;
   final String age;
-  List<PedidoInfo> pedidos;
+ // List<PedidoInfo> pedidos;
   List<AmigoInfo> amigos;
 
   UsuarioInfo(
@@ -13,7 +13,7 @@ class UsuarioInfo {
       this.name,
       this.city,
       this.age,
-      this.pedidos,
+    //  this.pedidos,
       this.amigos});
 
   factory UsuarioInfo.fromJson(Map<String, dynamic> json) {
@@ -23,7 +23,7 @@ class UsuarioInfo {
       name: json['nombre'],
       city: json['ciudad'],
       age: json['edad'],
-      pedidos: json['pedidos'],
+      //pedidos: json['pedidos'],
       amigos: json['amigos'],
   
     );
@@ -43,18 +43,39 @@ class AmigoInfo {
   }
 }
 
-class PedidoInfo {
-  final String articulo;
-  final String cantidad;
+class ArticulosInfo {
+  final String categoria;
+  final String nombre;
   final String precio;
+  final String cantidad;
+  ArticulosInfo({this.categoria, this.nombre, this.precio, this.cantidad});
 
-  PedidoInfo({this.articulo, this.cantidad, this.precio});
-
-  factory PedidoInfo.fromJson(Map<String, dynamic> json) {
-    return PedidoInfo(
-      articulo: json['articulo'],
+  factory ArticulosInfo.fromJson(Map<String, dynamic> json) {
+    return ArticulosInfo(
+      categoria: json['Categoria'],
+      nombre: json['Nombre'],
+      precio: json['Precio'],
       cantidad: json['cantidad'],
-      precio: json['precio'],
+    );
+  }
+}
+
+class PublicacionInfo {
+  final String docuID;
+  final String creador;
+  final int valor;
+  final String mandadero;
+  final List<ArticulosInfo> productos;
+
+  PublicacionInfo({this.docuID,this.creador, this.valor, this.mandadero, this.productos});
+
+  factory PublicacionInfo.fromJson(Map<String, dynamic> json) {
+    return PublicacionInfo(
+      creador: json['NombreCreador'],
+      valor: json['Valor'],
+      mandadero: json['mandadero'],
+      productos: json['Productos'],      
+
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/Models/MultipleKeys.dart';
 import 'package:proyecto_final/UI/Home.dart';
@@ -46,6 +47,9 @@ class Isloggedstate extends State {
   //final _signUpfkey = GlobalKey<FormState>();
   final _email = new TextEditingController();
   final _password = new TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseUser _user;
+  GoogleSignIn _googleSignIn = new GoogleSignIn();
   Widget build(BuildContext context) {
     //contextsc = context;
     return SingleChildScrollView(
@@ -123,7 +127,7 @@ class Isloggedstate extends State {
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      child: Text("Log In!"),
+                      child: Text("Iniciar sesión"),
                       onPressed: () {
                         if (isEmail(_email.value.text)) {
                           onpressedlogin();
@@ -136,20 +140,47 @@ class Isloggedstate extends State {
                   ],
                 ),
               )),
-          Text("or"),
+          Text("o"),
           RaisedButton(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
-            child: Text("Sign Up"),
+            child: Text("Registrate"),
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Registrar()));
+            },
+          ),RaisedButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: Colors.white,
+            child: Text("Inicia sesión con Google"),
+            onPressed: () {
+              googlelogin();
+              //Navigator.push(context,
+               //   MaterialPageRoute(builder: (context) => Registrar()));
             },
           ),
         ],
       ),
     );
+  }
+  Future<void> googlelogin() async {
+    try{
+    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+
+    AuthResult result = (await _auth.signInWithCredential(credential));
+
+    _user = result.user;
+    }catch(e){}
+    Provider.of<ControlEstados>(context, listen: false)
+            .setLoggedin(_user.email, true, rememberMe);
   }
 
   void onpressedlogin() async {
@@ -166,9 +197,9 @@ class Isloggedstate extends State {
         Provider.of<ControlEstados>(context, listen: false)
             .setLoggedin(_email.text, true, rememberMe);
       } else {
-        // sign in unsuccessful
-        print('sign in Not');
-        // ex: prompt the user to try again
+
+        print("Ingreso fallido");
+
       }
     }
   }
