@@ -4,6 +4,7 @@ import 'package:proyecto_final/Models/MultipleKeys.dart';
 import 'package:proyecto_final/Services/FireAuth.dart';
 import 'package:proyecto_final/Services/FireDatabase.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:proyecto_final/Models/MultipleKeys.dart';
 
 var globalContext;
 
@@ -33,7 +34,6 @@ class Registrarform extends StatefulWidget {
 }
 
 class RegistrarformState extends State {
-  //final GlobalKey<FormState> _signUpfkey = GlobalKey<FormState>();
   FireAuth fireReg = new FireAuth();
   DatabaseThings fireDB = new DatabaseThings();
   final _email = new TextEditingController();
@@ -42,6 +42,7 @@ class RegistrarformState extends State {
   final _username = new TextEditingController();
   final _city = new TextEditingController();
   final _age = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -180,4 +181,5 @@ class RegistrarformState extends State {
       child: widg,
     );
   }
+
 }

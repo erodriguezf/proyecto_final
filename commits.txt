@@ -1,0 +1,17 @@
+Fixes:
+  * Solucionado problema referente a las multiples llaves creadas para realizar validaciones en Widgets de Form
+Changes:
+  Models:
+    MultipleKeys:
+      + Clase agregado.
+      ? Este widget soluciona el inconveniente presentado cuando se usan las GlobalKeys dentro de Forms.
+      ? Este Clase permite el poder seleccionar la llave a usar sin tener que crear multiples instancias de ellas.
+  UI:
+    MiLista:
+      + Vista agregada.
+      ? Esta vista funciona para poder visualizar, editar y eliminar las frutas que el usuario desea comprar.
+  Widget:
+    Fruta:
+      + Widget creado.
+      ? Este widget funciona para poder mostrar información, relevante, de la fruta escogida para ser comprada.
+      ? Esta información será el precio, el nombre y su respectiva cantidad. Tambien se incluyen los botones de aumentar y reducir la cantidad de fruta a comprar.

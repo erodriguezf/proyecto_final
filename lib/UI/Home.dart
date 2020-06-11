@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/UI/Amigos.dart';
 import 'package:proyecto_final/UI/NavDrawer.dart';
+// import 'package:proyecto_final/UI/MiLista.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'Amigos.dart';
 import 'Lista.dart';
 
@@ -73,7 +74,7 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-      ),
+      )
     );
   }
 }
