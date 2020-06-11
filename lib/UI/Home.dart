@@ -24,8 +24,7 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final acState = Provider.of<ControlEstados>(context);
+  Widget build(BuildContext context) {  
     contexth = context;
     return Scaffold(
       appBar:
@@ -84,13 +83,8 @@ class _HomeState extends State<Home> {
                             child: RaisedButton(
                             color: Colors.deepOrange,
                              
-                                 onPressed: () => {
-                                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>Amigos()),
-                    ),
-                          
-                          },
+        onPressed: (){Navigator.push(
+                  contexth, MaterialPageRoute(builder: (contexth) => Amigos()));},
 
                           child: new Text("Amigos2",
                                 style: new TextStyle(fontSize: 20.0),
@@ -114,9 +108,6 @@ class _HomeState extends State<Home> {
                             style: new TextStyle(fontSize: 20.0)),
                           )
                           ),
-
-
-            
 
           ],
         ),

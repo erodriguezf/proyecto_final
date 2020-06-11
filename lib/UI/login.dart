@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto_final/Models/MultipleKeys.dart';
 import 'package:proyecto_final/UI/Home.dart';
 import 'package:proyecto_final/UI/Registro.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
@@ -18,7 +19,7 @@ class Login extends StatelessWidget {
     return MaterialApp(
         title: "Me traes algo!",
         home: Scaffold(
-          backgroundColor: const Color(0xff167F67),
+          backgroundColor: Colors.red[400],
           //resizeToAvoidBottomPadding: false,
 
           body: Provider.of<ControlEstados>(contextsc).getlogin
@@ -42,7 +43,7 @@ class Isloggedstate extends State {
 
   bool auxlog = true;
 
-  final _signUpfkey = GlobalKey<FormState>();
+  //final _signUpfkey = GlobalKey<FormState>();
   final _email = new TextEditingController();
   final _password = new TextEditingController();
   Widget build(BuildContext context) {
@@ -55,11 +56,11 @@ class Isloggedstate extends State {
             padding: const EdgeInsets.fromLTRB(0, 75, 0, 0),
             child: Icon(
               Icons.store,
-              size: 100,
+              size: 100,color: Colors.white,
             ),
           ),
           Form(
-              key: _signUpfkey,
+              key: MultipleKeys.loginFormKey,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -91,7 +92,7 @@ class Isloggedstate extends State {
                       child: containerText(Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
-                          autofocus: true,
+                          autofocus: true, 
                           decoration: new InputDecoration(
                               labelText: "Password",
                               labelStyle: TextStyle(color: Colors.white)),
@@ -106,7 +107,7 @@ class Isloggedstate extends State {
                         children: <Widget>[
                           Checkbox(
                               activeColor: Colors.white,
-                              checkColor: Colors.green,
+                              checkColor: Colors.red[400],
                               value: rememberMe,
                               onChanged: (bool rem) {
                                 setState(() {

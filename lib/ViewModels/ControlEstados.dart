@@ -1,28 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/Services/FireDatabase.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ControlEstados with ChangeNotifier {
   ControlEstados();
-
+  QuerySnapshot logUSDB;
+  DatabaseThings fireDB = new DatabaseThings();
   bool _isLogged = false;
   String _email;
+  String documentDeLogged;
   bool rememberme = false;
 
-  void setLoggedin(String email,bool log, bool remember) async {
+  void setLoggedin(String email, bool log, bool remember) async {
+    
     String exist = "";
-   // SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    exist = await sharedemailget()??"";
+    try{
+    fireDB.getInfoUsuario(_email).then((logDB) {
+      logUSDB = logDB;
+    });
+    documentDeLogged = logUSDB.documents[0].documentID;
+    }catch(e){
+      print(e.toString());
+    }
+    // SharedPreferences sharedpref = await SharedPreferences.getInstance();
+    exist = await sharedemailget() ?? "";
     if (exist.length != 0) {
       _isLogged = await sharedLoggedget();
       _email = await sharedemailget();
-    } else {      
+      documentDeLogged = await sharedDocumentget();
+    } else {
       _email = email;
       _isLogged = log;
     }
     if (remember) {
-      sharedLoggedset(log);      
+      sharedLoggedset(log);
       sharedemailset(email);
+      sharedDocumentset(documentDeLogged);
     }
 
     notifyListeners();
@@ -30,6 +45,11 @@ class ControlEstados with ChangeNotifier {
 
   void setEmail(String email) {
     _email = email;
+    notifyListeners();
+  }
+
+    void setDocument(String document) {
+    documentDeLogged = document;
     notifyListeners();
   }
 
@@ -49,9 +69,9 @@ class ControlEstados with ChangeNotifier {
     notifyListeners();
   }
 
-
   bool get getlogin => _isLogged;
   String get getEmail => _email;
+    String get getDocument => documentDeLogged;
   bool get getrememberMe => rememberme;
 
   Future<String> sharedemailget() async {
@@ -59,14 +79,24 @@ class ControlEstados with ChangeNotifier {
     return sharedpref.getString("email");
   }
 
+  Future<String> sharedDocumentget() async {
+    SharedPreferences sharedpref = await SharedPreferences.getInstance();
+    return sharedpref.getString("document");
+  }
+
   Future<bool> sharedLoggedget() async {
     SharedPreferences sharedpref = await SharedPreferences.getInstance();
     return sharedpref.getBool("isloggeda") ?? false;
   }
 
-  Future<bool> sharedemailset(String username) async {
+  Future<bool> sharedemailset(String email) async {
     SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    return sharedpref.setString("email", username);
+    return sharedpref.setString("email", email);
+  }
+
+  Future<bool> sharedDocumentset(String document) async {
+    SharedPreferences sharedpref = await SharedPreferences.getInstance();
+    return sharedpref.setString("document", document);
   }
 
   Future<bool> sharedLoggedset(bool log) async {
