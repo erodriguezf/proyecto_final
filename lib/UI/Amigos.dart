@@ -4,7 +4,6 @@ import 'package:proyecto_final/UI/AgregarAmigo.dart';
 import 'package:proyecto_final/UI/ListaDeAmigos.dart';
 import 'package:proyecto_final/UI/NavDrawer.dart';
 
-
 var contexth;
 
 class Amigos extends StatefulWidget {
@@ -14,8 +13,6 @@ class Amigos extends StatefulWidget {
 
 class AmigosState extends State<Amigos> {
   List<Persona> amix = new List<Persona>();
-
-
   @override
   Widget build(BuildContext context) {    
     contexth = context;
@@ -80,6 +77,7 @@ class AmigosState extends State<Amigos> {
               ),
             )
           ],
+      
         ),
       ),
     );
