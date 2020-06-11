@@ -1,77 +1,57 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'Login.dart';
+import 'package:proyecto_final/Services/FireDatabase.dart';
+import 'package:proyecto_final/Services/RequestStructure.dart';
 
-class ProfessorDetails extends StatefulWidget {
-  int email;
-  String name;
-  String token;
-  bool logged;
+class AmigoPerfil extends StatefulWidget {
+  final AmigoInfo amigo;
 
-  ProfessorDetails();
+  AmigoPerfil(this.amigo);
   @override
-  ProfessorDetailsstate createState() => ProfessorDetailsstate();
+  AmigoPerfilstate createState() => AmigoPerfilstate(this.amigo);
 }
 
-class ProfessorDetailsstate extends State<ProfessorDetails> {
-  int profeid;
-  int profidcourse;
-  String profname;
-  String profusername;
-  String profemail;
-  String profphone;
-  String profcity;
-  String profcountry;
-  String profbirthday;
-  String username;
-  String token;
-  bool logged;
- 
+class AmigoPerfilstate extends State<AmigoPerfil> {
+  AmigoInfo amigo;
+  String ciudad ="";
+  String edad="";
+  String nombredeusuario="";
+  QuerySnapshot amifDB;
+  DatabaseThings fireDB = new DatabaseThings();
+
+  AmigoPerfilstate(this.amigo);
   @override
   void initState() {
     super.initState();
-    if (logged) {
-    
-    } else {
-      Islogged();
-    }
-
+    buscarListadeAmigos(amigo.email);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("SchoolReady!"),backgroundColor: Colors.black, actions: <Widget>[
-        Padding(
-          padding: EdgeInsets.fromLTRB(0, 15, 18, 0),
-          child: Text(
-            username,
-            style: TextStyle(fontSize: 19, color: Colors.white),
-          ),
-        ),
-      ]),
+      appBar: AppBar(
+          title: Text("Traeme algo!"),
+          backgroundColor: Colors.black,
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 18, 0),
+              child: Text(
+                amigo.nombre,
+                style: TextStyle(fontSize: 19, color: Colors.white),
+              ),
+            ),
+          ]),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           headerWidget(),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 36, 8, 15),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.confirmation_number),
-                Text(
-                  "Professor ID: " + profeid.toString(),
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: Row(
               children: <Widget>[
                 Icon(Icons.person),
                 Text(
-                  "Username: " + profusername,
+                 "Usuario: " + nombredeusuario,
                   style: TextStyle(fontSize: 21),
                 )
               ],
@@ -83,19 +63,7 @@ class ProfessorDetailsstate extends State<ProfessorDetails> {
               children: <Widget>[
                 Icon(Icons.alternate_email),
                 Text(
-                  "Email: " + profemail,
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.phone),
-                Text(
-                  "Phone: " + profphone,
+                  "Email: " + amigo.email,
                   style: TextStyle(fontSize: 21),
                 )
               ],
@@ -107,31 +75,19 @@ class ProfessorDetailsstate extends State<ProfessorDetails> {
               children: <Widget>[
                 Icon(Icons.location_on),
                 Text(
-                  "City: " + profcity,
+                  "Ciudad: " + ciudad,
                   style: TextStyle(fontSize: 21),
                 )
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.location_city),
-                Text(
-                  "Country: " + profcountry,
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.fromLTRB(10,10,0,150),
             child: Row(
               children: <Widget>[
                 Icon(Icons.date_range),
                 Text(
-                  "Birthday: " + profbirthday,
+                  "Edad: " + edad,
                   style: TextStyle(fontSize: 21),
                 )
               ],
@@ -141,11 +97,27 @@ class ProfessorDetailsstate extends State<ProfessorDetails> {
       ),
     );
   }
+  buscarListadeAmigos(String email) async {
+    fireDB.getInfoUsuario(email).then((logDB) {
+      amifDB = logDB;
+        setState(() {
+          nombredeusuario = amifDB.documents[0].data["Nombre de usuario"];
+          ciudad = amifDB.documents[0].data["ciudad"];
+          edad = amifDB.documents[0].data["edad"];          
+      });
+    });
 
-   Widget headerWidget() {
+  }
+  void infoAmigo() {
+    fireDB.getInfoUsuario(amigo.email).then((logDB) {
+    
+    });
+  }
+
+  Widget headerWidget() {
     return new Card(
       elevation: 3,
-      color: const Color(0xff167F67),
+      color: Colors.red[400],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -154,22 +126,22 @@ class ProfessorDetailsstate extends State<ProfessorDetails> {
         children: <Widget>[
           new Center(
             child: new Container(
-              margin: EdgeInsets.only(bottom: 5.0),
+              margin: EdgeInsets.only(bottom: 30.0),
               height: 20.0,
               width: 80.0,
             ),
           ),
           Text(
-            'School Ready!',
+            'Traeme algo!',
             style: TextStyle(color: Colors.white, fontSize: 25),
           ),
           Icon(
-            Icons.school,
+            Icons.store,
             size: 100,
             color: Colors.white,
           ),
           new Text(
-            "Professor Details",
+            "Amigo",
             textAlign: TextAlign.center,
             style: new TextStyle(
               color: Colors.white,
@@ -178,7 +150,7 @@ class ProfessorDetailsstate extends State<ProfessorDetails> {
           Padding(
             padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
             child: Text(
-              profname,
+              amigo.nombre,
               textAlign: TextAlign.center,
               style: new TextStyle(
                 fontSize: 25,
@@ -189,6 +161,5 @@ class ProfessorDetailsstate extends State<ProfessorDetails> {
         ],
       ),
     );
-  
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_final/Models/Persona.dart';
 import 'package:proyecto_final/Services/FireDatabase.dart';
 import 'package:proyecto_final/UI/AgregarAmigoCard.dart';
+import 'package:proyecto_final/UI/NavDrawer.dart';
 
 class AgregarAmigo extends StatefulWidget {
   @override
@@ -13,11 +14,13 @@ class _AgregarAmigoState extends State<AgregarAmigo> {
   List<Persona> resbusqueda = new List<Persona>();
   QuerySnapshot snapbusq;
   bool encontrado = false;
+  DatabaseThings fireDB = new DatabaseThings();
   TextEditingController busqueda = new TextEditingController();
   @override
-  DatabaseThings fireDB = new DatabaseThings();
+  
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar:
           AppBar(title: Text("Traeme algo!"), backgroundColor: Colors.red[400]),
       body: Column(
