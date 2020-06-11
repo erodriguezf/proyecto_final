@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
     contexth = context;
     return Scaffold(
       appBar:
-          AppBar(title: Text("School Ready!"), backgroundColor: Colors.black),
+          AppBar(title: Text("Home"), backgroundColor: Colors.black),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,8 +35,10 @@ class _HomeState extends State<Home> {
               onPressed: (){Navigator.push(
                   contexth, MaterialPageRoute(builder: (contexth) => Amigos()));},
             )
+
           ],
         ),
+      ),
       ),
     );
   }
