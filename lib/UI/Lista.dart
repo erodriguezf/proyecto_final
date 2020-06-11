@@ -6,7 +6,7 @@ class Lista extends StatelessWidget {
   Widget build(BuildContext context) {
 
      return MaterialApp(
-     title: 'Escuela',
+     title: 'Home',
      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
