@@ -9,6 +9,8 @@ class Fruta extends StatefulWidget {
   final String identificadorFruta;
 
   final Function(int) obtenerTotal;
+
+  int _cantidadFruta = 0;
   
   @override
   _FrutaState createState() => _FrutaState();
@@ -16,39 +18,46 @@ class Fruta extends StatefulWidget {
 
 class _FrutaState extends State<Fruta> {
 
-  int _cantidadFruta = 0;
-
-  void onCantidadFrutaChange(int cambio) {
+  _onCantidadFrutaChange(int cambio) {
     setState(() {
-      _cantidadFruta = cambio + _cantidadFruta;
-      widget.obtenerTotal(_cantidadFruta * widget.precioFruta);
+      widget._cantidadFruta = widget._cantidadFruta + cambio < 0 ? 0 : widget._cantidadFruta + cambio;
     });
+    widget.obtenerTotal(widget._cantidadFruta * widget.precioFruta);
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Card(
-          child: Text(widget.nombreFruta + " ($_cantidadFruta)"),
+          child: Container(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              "${widget.nombreFruta} (${widget._cantidadFruta})",
+              style: TextStyle(
+                  fontSize: 20,
+              ),
+            )
+          ),
         ),
-        Card(
-          child: Row(
-            children: <Widget>[
-              MaterialButton(
-                child: Icon(Icons.add),
-                onPressed: () {
-                  onCantidadFrutaChange(1);
-                },
-              ),
-              MaterialButton(
-                child: Icon(Icons.remove),
-                onPressed: () {
-                  onCantidadFrutaChange(-1);
-                },
-              ),
-            ],
-          )
+        MaterialButton(
+          child: Icon(
+            Icons.add,
+            color: Colors.green,
+          ),
+          onPressed: () {
+            _onCantidadFrutaChange(1);
+          },
+        ),
+        MaterialButton(
+          child: Icon(
+            Icons.remove,
+            color: Colors.red
+          ),
+          onPressed: () {
+            _onCantidadFrutaChange(-1);
+          },
         ),
       ],
     );

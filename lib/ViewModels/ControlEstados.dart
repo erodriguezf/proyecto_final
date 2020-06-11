@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_final/Services/FireDatabase.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:proyecto_final/Models/Lista.model.dart';
+import 'dart:convert';
 
 class ControlEstados with ChangeNotifier {
   ControlEstados();
@@ -12,6 +14,7 @@ class ControlEstados with ChangeNotifier {
   String _email;
   String documentDeLogged;
   bool rememberme = false;
+  Lista listaProductosUsuario = new Lista();
 
   void setLoggedin(String email, bool log, bool remember) async {
     
@@ -69,6 +72,11 @@ class ControlEstados with ChangeNotifier {
     notifyListeners();
   }
 
+  void setListaProductosUsuario(Lista lista) {
+    this.listaProductosUsuario = lista;
+    notifyListeners();
+  }
+
   bool get getlogin => _isLogged;
   String get getEmail => _email;
     String get getDocument => documentDeLogged;
@@ -89,6 +97,12 @@ class ControlEstados with ChangeNotifier {
     return sharedpref.getBool("isloggeda") ?? false;
   }
 
+  Future<Lista> sharedListaget() async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    String result = sharedPref.getString("lista");
+    return json.decode(result);
+  }
+
   Future<bool> sharedemailset(String email) async {
     SharedPreferences sharedpref = await SharedPreferences.getInstance();
     return sharedpref.setString("email", email);
@@ -102,5 +116,11 @@ class ControlEstados with ChangeNotifier {
   Future<bool> sharedLoggedset(bool log) async {
     SharedPreferences sharedpref = await SharedPreferences.getInstance();
     return sharedpref.setBool("isloggeda", log);
+  }
+
+  Future<bool> sharedListaset(Lista lista) async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    String listaCodificadaAJson = jsonEncode(lista);
+    return sharedPref.setString("lista", listaCodificadaAJson);
   }
 }

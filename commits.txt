@@ -1,17 +1,12 @@
-Fixes:
-  * Solucionado problema referente a las multiples llaves creadas para realizar validaciones en Widgets de Form
 Changes:
-  Models:
-    MultipleKeys:
-      + Clase agregado.
-      ? Este widget soluciona el inconveniente presentado cuando se usan las GlobalKeys dentro de Forms.
-      ? Este Clase permite el poder seleccionar la llave a usar sin tener que crear multiples instancias de ellas.
-  UI:
-    MiLista:
-      + Vista agregada.
-      ? Esta vista funciona para poder visualizar, editar y eliminar las frutas que el usuario desea comprar.
-  Widget:
-    Fruta:
-      + Widget creado.
-      ? Este widget funciona para poder mostrar información, relevante, de la fruta escogida para ser comprada.
-      ? Esta información será el precio, el nombre y su respectiva cantidad. Tambien se incluyen los botones de aumentar y reducir la cantidad de fruta a comprar.
+  Model:
+    Lista.model:
+      + Clase creada.
+      ? Esta clase permitirá el traer información de la API dada.
+      ? Es un simple template
+      + Agregada la decodificación de jsons para poder mapear la información.
+  ViewModels:
+    ControlEstados:
+      + Agregado convert package.
+      + Agregada funcion para poder almacenar información al shared_preferences para poder manejar la lista de productos del usuario. --> sharedListaset
+      + Agregada funcion para poder obtener información del shared_preferences la lista de productos del usuario. --> sharedListaget

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Widgets/Fruta.dart';
 
 class Lista extends StatelessWidget {
   // This widget is the root of your application.
@@ -11,14 +12,14 @@ class Lista extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Home(),
-
-
    );
-  
   }
 }
 
 class Home extends StatelessWidget{
+
+  List<Fruta> _frutas = new List<Fruta>();
+
    @override
    Widget build(BuildContext context){
      return Scaffold(

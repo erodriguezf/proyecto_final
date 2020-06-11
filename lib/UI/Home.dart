@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/UI/Amigos.dart';
 import 'package:proyecto_final/UI/NavDrawer.dart';
-// import 'package:proyecto_final/UI/MiLista.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'Amigos.dart';
-import 'Lista.dart';
+// import 'Lista.dart';
+import 'MiLista.dart';
 
 var contexth;
 
@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
                   onPressed: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Lista()))},
+                      MaterialPageRoute(builder: (context) => MiLista()))},
                       elevation: 2.0,
                       fillColor: Colors.red[400],
                       child: Text("Mi lista",style: TextStyle(fontSize: 20),),
