@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_final/Models/Persona.dart';
-import 'package:proyecto_final/UI/AgregarAmigo.dart';
+import 'package:proyecto_final/UI/AgregarMiLista.dart';
 import 'package:proyecto_final/UI/ListaDeAmigos.dart';
 import 'package:proyecto_final/UI/NavDrawer.dart';
 
@@ -36,7 +36,7 @@ class MisListasState extends State<MisListas> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AgregarAmigo()));                        
+                                builder: (context) => AgregarMiLista()));                        
                       },
                       tooltip: 'Agregar lista de compras',
                       child: new Icon(Icons.list)),

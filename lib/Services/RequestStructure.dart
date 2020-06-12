@@ -60,6 +60,21 @@ class ArticulosInfo {
   }
 }
 
+class ArticulosInfoAPI {
+  final String categoria;
+  final String nombre;
+  final double precio;
+  ArticulosInfoAPI({this.categoria, this.nombre, this.precio});
+
+  factory ArticulosInfoAPI.fromJson(Map<String, dynamic> json) {
+    return ArticulosInfoAPI(
+      categoria: json['category'],
+      nombre: json['name'],
+      precio: json['price'],  
+    );
+  }
+}
+
 class PublicacionInfo {
   final String docuID;
   final String creador;
