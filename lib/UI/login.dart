@@ -178,6 +178,11 @@ class Isloggedstate extends State {
     AuthResult result = (await _auth.signInWithCredential(credential));
 
     _user = result.user;
+
+    setState((){
+      islogd = true;
+    });
+
     }catch(e){}
     Provider.of<ControlEstados>(context, listen: false)
             .setLoggedin(_user.email, true, rememberMe);
@@ -215,4 +220,14 @@ class Isloggedstate extends State {
       child: widg,
     );
   }
+
+  Future<void> googleSignout() async{
+    await _auth.signOut().then((onValue){
+      _googleSignIn.signOut();
+      setState((){
+        islogd = false;
+      });
+    });
+  }
+
 }
