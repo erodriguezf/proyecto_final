@@ -17,68 +17,79 @@ class _AgregarAmigoState extends State<AgregarAmigo> {
   DatabaseThings fireDB = new DatabaseThings();
   TextEditingController busqueda = new TextEditingController();
   @override
-  
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavDrawer(),
       appBar:
           AppBar(title: Text("Traeme algo!"), backgroundColor: Colors.red[400]),
-      body: Column(
-        children: [
-          Container(
-              color: Colors.black26,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: TextField(
-                        controller: busqueda,
-                        decoration: InputDecoration(
-                            hintText: "Buscar usuarios",
-                            hintStyle: TextStyle(color: Colors.white),
-                            border: InputBorder.none),
-                      )),
-                      FlatButton(
-                          color: Colors.grey[200],
-                          shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                          onPressed: () { buscar();},
-                          child: Row(
-                            children: <Widget>[
-                              Icon(Icons.search),
-                              Text("Buscar")
-                            ],
-                          ))
-                    ],
-                  ),
-                 
-                ],
-              ))
-        ,_listUsuarios()],
-       ),
+      body: Builder(
+              builder: (context)=> Column(
+          children: [
+            Container(
+                color: Colors.black26,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: TextField(
+                          controller: busqueda,
+                          decoration: InputDecoration(
+                              hintText: "Buscar usuarios",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: InputBorder.none),
+                        )),
+                        FlatButton(
+                            color: Colors.grey[200],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            onPressed: () {
+                              buscar(context);
+                            },
+                            child: Row(
+                              children: <Widget>[
+                                Icon(Icons.search),
+                                Text("Buscar")
+                              ],
+                            )),
+                      ],
+                    ),
+                  ],
+                )),
+            _listUsuarios()
+          ],
+        ),
+      ),
     );
   }
 
-  void buscar() {
+  void buscar(BuildContext context) {
     fireDB.buscarporNombre(busqueda.text).then((resbu) {
       setState(() {
-        snapbusq = resbu;  
+        snapbusq = resbu;
       });
-      
     });
+
+    if (snapbusq.documents.length == 0) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('usuario no encontrado',style: TextStyle(fontSize: 20),),
+      ));
+    }
   }
 
   Widget _listUsuarios() {
-    return snapbusq != null? 
-        ListView.builder(
-        shrinkWrap: true,
-        itemCount: snapbusq.documents.length,
-        itemBuilder: (context, posicion) {
-          return AgregarAmigoCard(snapbusq.documents[posicion].data["nombre"],
-              snapbusq.documents[posicion].data["Nombre de usuario"],
-              snapbusq.documents[posicion].documentID,snapbusq.documents[posicion].data["email"]);
-        }): Container();
+    return snapbusq != null
+        ? ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapbusq.documents.length,
+            itemBuilder: (context, posicion) {
+              return AgregarAmigoCard(
+                  snapbusq.documents[posicion].data["nombre"],
+                  snapbusq.documents[posicion].data["Nombre de usuario"],
+                  snapbusq.documents[posicion].documentID,
+                  snapbusq.documents[posicion].data["email"]);
+            })
+        : Container();
   }
 }

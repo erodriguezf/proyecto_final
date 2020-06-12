@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_final/Models/Persona.dart';
 import 'package:proyecto_final/UI/AgregarAmigo.dart';
 import 'package:proyecto_final/UI/ListaDeAmigos.dart';
+import 'package:proyecto_final/UI/ListaPublicacionesAmigos.dart';
 import 'package:proyecto_final/UI/NavDrawer.dart';
 
 var contexth;
@@ -68,7 +69,9 @@ class AmigosState extends State<Amigos> {
                     heroTag: "btn3",
                       backgroundColor: Colors.red[400],
                       onPressed: () {
-                        //Navigator.push(context,MaterialPageRoute(builder: (context) => AgregarAmigo()));                        
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ListaPublicacionesDeAmigos()));
                       },
                       tooltip: 'Posts de amigos',
                       child: new Icon(Icons.list)),

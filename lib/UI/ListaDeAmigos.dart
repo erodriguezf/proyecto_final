@@ -19,6 +19,7 @@ class ListaDeAmigosState extends State<ListaDeAmigos> {
   List<AmigoInfo> friendList = new List<AmigoInfo>();
   DatabaseThings fireDB = new DatabaseThings();
   bool encontrado = false;
+  String ae = "No se han encontrado amigos :(";
   TextEditingController busqueda = new TextEditingController();
 
   @override
@@ -37,6 +38,7 @@ class ListaDeAmigosState extends State<ListaDeAmigos> {
       body: Column(
         children: [
           _listAmigos(),
+          Text(ae, style: TextStyle(fontSize: 25),)
         ],
       ),
     );
@@ -52,10 +54,12 @@ class ListaDeAmigosState extends State<ListaDeAmigos> {
           friendList = resami.map((e) => AmigoInfo.fromJson(e)).toList();
           print(resami.toString());
           print("friends::: " + friendList.toString());
+          ae = " ";
         });
       });
     });
     }catch(e){}
+
   }
 
   Widget _listAmigos() {

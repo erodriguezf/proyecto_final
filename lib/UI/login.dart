@@ -133,7 +133,7 @@ class Isloggedstate extends State {
                           onpressedlogin();
                         } else {
                           Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text('Invalid Email or password')));
+                              content: Text('Email o contraseña incorrectos',style: TextStyle(fontSize: 20),)));
                         }
                       },
                     )
@@ -183,7 +183,7 @@ class Isloggedstate extends State {
             .setLoggedin(_user.email, true, rememberMe);
   }
 
-  void onpressedlogin() async {
+  void onpressedlogin()async {
     AuthResult user;
     try {
       user = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -191,13 +191,15 @@ class Isloggedstate extends State {
     } catch (e) {
       print(e.toString());
     } finally {
-      if (user != null) {
-        // sign in successful!
+      if (user != null) {        
         print("Ingreso exitoso");
+        Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('Bienvenido',style: TextStyle(fontSize: 20),)));
         Provider.of<ControlEstados>(context, listen: false)
             .setLoggedin(_email.text, true, rememberMe);
       } else {
-
+        Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('Error de contraseña o cuenta',style: TextStyle(fontSize: 20),)));
         print("Ingreso fallido");
 
       }

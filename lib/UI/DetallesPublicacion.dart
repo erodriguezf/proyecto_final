@@ -28,100 +28,107 @@ var cont;
         backgroundColor: Colors.red[400],
       ),
       drawer: NavDrawer(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          headerWidget(),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.person),
-                Text(
-                  "Encargado(a) : " + publicacion.mandadero ?? "",
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.attach_money),
-                Text(
-                  "Precio total: " + publicacion.valor?.toString() ?? "",
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.fastfood),
-                Text(
-                  "Articulo: " + publicacion.productos[0].nombre,
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.category),
-                Text(
-                  "Categoria: " + publicacion.productos[0].categoria,
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.format_list_numbered),
-                Text(
-                  "Cantidad: " + publicacion.productos[0].cantidad,
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.attach_money),
-                Text(
-                  "Precio unitario: " + publicacion.productos[0].precio,
-                  style: TextStyle(fontSize: 21),
-                )
-              ],
-            ),
-          ),
-          RaisedButton(
-              color: Colors.red[400],
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text("Aceptar pedido",
-                    style: TextStyle(color: Colors.white, fontSize: 22.0)),
+      body: Builder(
+              builder:(context) => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            headerWidget(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.person),
+                  Text(
+                    "Encargado(a) : " + publicacion.mandadero ?? "",
+                    style: TextStyle(fontSize: 21),
+                  )
+                ],
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              onPressed: () {
-                if (publicacion.mandadero != "") {
-                  print("no puedes");                  
-                } else {
-                emaillog = fireDB.getEmailLogueado() as String;
-                fireDB.tomarPedido(emaillog,publicacion.docuID);
-                }
-              }),
-        ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.attach_money),
+                  Text(
+                    "Precio total: " + publicacion.valor?.toString() ?? "",
+                    style: TextStyle(fontSize: 21),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.fastfood),
+                  Text(
+                    "Articulo: " + publicacion.productos[0].nombre,
+                    style: TextStyle(fontSize: 21),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.category),
+                  Text(
+                    "Categoria: " + publicacion.productos[0].categoria,
+                    style: TextStyle(fontSize: 21),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.format_list_numbered),
+                  Text(
+                    "Cantidad: " + publicacion.productos[0].cantidad,
+                    style: TextStyle(fontSize: 21),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.attach_money),
+                  Text(
+                    "Precio unitario: " + publicacion.productos[0].precio,
+                    style: TextStyle(fontSize: 21),
+                  )
+                ],
+              ),
+            ),
+            RaisedButton(
+                color: Colors.red[400],
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text("Aceptar pedido",
+                      style: TextStyle(color: Colors.white, fontSize: 22.0)),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                onPressed: () {
+                  if (publicacion.mandadero != "") {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text('Este pedido ya ha sido asignado a alguien', style: TextStyle(fontSize: 20),)));
+                    print("no puedes");                  
+                  } else {
+                    
+                  emaillog = fireDB.getEmailLogueado() as String;
+                  fireDB.tomarPedido(emaillog,publicacion.docuID);
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text('Este pedido te ha sido asignado exitosamente')));
+                  }
+                }),
+          ],
+        ),
       ),
     );
   }

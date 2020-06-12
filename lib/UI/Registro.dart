@@ -132,10 +132,15 @@ class RegistrarformState extends State {
                   borderRadius: BorderRadius.circular(20)),
               onPressed: () {
                 if (isEmail(_email.value.text)) {
-                  onpressedregistar();
+                  if (_password.text.length >= 6) {
+                    onpressedregistar();
+                  } else {
+                    Scaffold.of(globalContext).showSnackBar(
+                        SnackBar(content: Text('contraseña demasiado corta',style: TextStyle(fontSize: 20),)));
+                  }
                 } else {
                   Scaffold.of(globalContext)
-                      .showSnackBar(SnackBar(content: Text('Email invalido')));
+                      .showSnackBar(SnackBar(content: Text('Email invalido',style: TextStyle(fontSize: 20),)));
                 }
                 Navigator.pop(globalContext);
               },

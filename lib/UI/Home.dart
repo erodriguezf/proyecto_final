@@ -48,9 +48,7 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.all(50.0),
                 child: RawMaterialButton(
                   onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ListaPublicacionesDeAmigos()))},
+                    },
                       elevation: 2.0,
                       fillColor: Colors.red[400],
                       child: Text("Mi lista",style: TextStyle(fontSize: 20),),

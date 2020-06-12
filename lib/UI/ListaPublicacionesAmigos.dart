@@ -23,6 +23,7 @@ class ListaPublicacionesDeAmigosState
   List<AmigoInfo> friendList = new List<AmigoInfo>();
   List<PublicacionInfo> publicList = new List<PublicacionInfo>();
   DatabaseThings fireDB = new DatabaseThings();
+  String lne = "No se han encontrado publicaciones de amigos";
   bool encontrado = false;
   QuerySnapshot snapbusq;
   TextEditingController busqueda = new TextEditingController();
@@ -45,45 +46,59 @@ class ListaPublicacionesDeAmigosState
       body: Column(
         children: [
           _listPublicaciones(),
+          Text(
+            lne,
+            style: TextStyle(fontSize: 25),
+          ),
         ],
       ),
     );
   }
 
-  buscarListadePublicaciones(String email) async {
+  void buscarListadePublicaciones(String email) async {
     try {
       fireDB.getInfoUsuario(email).then((logDB) {
-        fireDB
-            .getAmigosdelogueado(logDB.documents[0].documentID ?? " ")
-            .then((resam) {
-          setState(() {
-            print("aaa" + resam.data["amigos"].toString());
-            resami = resam.data["amigos"];
-            friendList = resami.map((e) => AmigoInfo.fromJson(e)).toList();
-            print(resami.toString());
-            for (var i = 0; i < friendList.length; i++) {
-              fireDB.buscarPublicaciones(friendList[i].nombre).then((bus) {
-                snapbusq = bus;
-                //publicList
-                if(snapbusq!=null){ 
-                  prodsami = snapbusq.documents[0].data["Productos"];
-                  print(prodsami.toString());
-                PublicacionInfo publicacion = PublicacionInfo(
-                  
-                    docuID: snapbusq.documents[0].documentID,
-                    creador: snapbusq.documents[0].data["NombreCreador"],
-                    mandadero: snapbusq.documents[0].data["mandadero"],
-                    valor: snapbusq.documents[0].data["Valor"],
-                    productos: prodsami.map((e) => ArticulosInfo.fromJson(e)).toList());
+        if (logDB != null) {
+          fireDB
+              .getAmigosdelogueado(logDB.documents[0].documentID ?? " ")
+              .then((resam) {
+            if (resam != null) {
+              print("aaa" + resam.data["amigos"].toString());
+              resami = resam.data["amigos"];
+              friendList = resami.map((e) => AmigoInfo.fromJson(e)).toList();
+              print(resami.toString());
+              for (var i = 0; i < friendList.length; i++) {
+                fireDB.buscarPublicaciones(friendList[i].nombre).then((bus) {
+                  if (bus != null) {
+                    snapbusq = bus;
+                  }
+
+                  //publicList
+                  if (snapbusq != null) {
+                    if(snapbusq.documents[0].data["estado"]=="0"){
+                    prodsami = snapbusq.documents[0].data["Productos"];
+                    print(prodsami.toString());
+
+                    PublicacionInfo publicacion = PublicacionInfo(
+                        docuID: snapbusq.documents[0].documentID,
+                        creador: snapbusq.documents[0].data["NombreCreador"],
+                        mandadero: snapbusq.documents[0].data["mandadero"],
+                        valor: snapbusq.documents[0].data["Valor"],
+                        productos: prodsami
+                            .map((e) => ArticulosInfo.fromJson(e))
+                            .toList());
                     publicList.add(publicacion);
-         
-              }});
+                    setState(() {
+                      lne = "";
+                    });
+                  }
+                }});
+              }
+              print("friends::: " + friendList.toString());
             }
-            print("friends::: " + friendList.toString());
           });
-        });
+        }
       });
-      return friendList;
     } catch (e) {}
   }
 
