@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/UI/Amigos.dart';
 import 'package:proyecto_final/UI/ListaPublicacionesAmigos.dart';
+import 'package:proyecto_final/UI/MisListas.dart';
 import 'package:proyecto_final/UI/NavDrawer.dart';
 import 'package:proyecto_final/UI/login.dart';
 import 'package:proyecto_final/ViewModels/ControlEstados.dart';
@@ -47,8 +48,8 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: const EdgeInsets.all(50.0),
                 child: RawMaterialButton(
-                  onPressed: () => {
-                    },
+                  onPressed: () => { Navigator.push(contexth,
+                        MaterialPageRoute(builder: (contexth) => MisListas()))},
                       elevation: 2.0,
                       fillColor: Colors.red[400],
                       child: Text("Mi lista",style: TextStyle(fontSize: 20),),
