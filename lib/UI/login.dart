@@ -52,6 +52,22 @@ class Isloggedstate extends State {
   GoogleSignIn _googleSignIn = new GoogleSignIn();
   Widget build(BuildContext context) {
     //contextsc = context;
+    var raisedButton = RaisedButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+            color: Colors.white,
+            child: Text("G", style: TextStyle(
+              fontFamily: 'Product Sans',
+              fontSize: 50,
+              color: Colors.orange,
+              )
+              ),
+            onPressed: () {
+              googlelogin();
+              //Navigator.push(context,
+               //   MaterialPageRoute(builder: (context) => Registrar()));
+            },
+          );
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -150,17 +166,7 @@ class Isloggedstate extends State {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Registrar()));
             },
-          ),RaisedButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            color: Colors.white,
-            child: Text("Inicia sesión con Google"),
-            onPressed: () {
-              googlelogin();
-              //Navigator.push(context,
-               //   MaterialPageRoute(builder: (context) => Registrar()));
-            },
-          ),
+          ),raisedButton,
         ],
       ),
     );
@@ -178,6 +184,11 @@ class Isloggedstate extends State {
     AuthResult result = (await _auth.signInWithCredential(credential));
 
     _user = result.user;
+
+    setState((){
+      islogd = true;
+    });
+
     }catch(e){}
     Provider.of<ControlEstados>(context, listen: false)
             .setLoggedin(_user.email, true, rememberMe);
@@ -217,4 +228,14 @@ class Isloggedstate extends State {
       child: widg,
     );
   }
+
+  Future<void> googleSignout() async{
+    await _auth.signOut().then((onValue){
+      _googleSignIn.signOut();
+      setState((){
+        islogd = false;
+      });
+    });
+  }
+
 }
