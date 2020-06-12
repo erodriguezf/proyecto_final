@@ -50,7 +50,7 @@ class ArticulosInfo {
   final String cantidad;
   ArticulosInfo({this.categoria, this.nombre, this.precio, this.cantidad});
 
-  factory ArticulosInfo.fromJson(Map<String, dynamic> json) {
+  factory ArticulosInfo.fromJson(Map<String, String> json) {
     return ArticulosInfo(
       categoria: json['Categoria'],
       nombre: json['Nombre'],
@@ -59,6 +59,26 @@ class ArticulosInfo {
     );
   }
 }
+
+class Articulos2Info {
+  final String categoria;
+  final String nombre;
+  final String precio;
+  final String cantidad;
+  Articulos2Info({this.categoria, this.nombre, this.precio, this.cantidad});
+
+  factory Articulos2Info.fromJson(Map<String, String> json) {
+    return Articulos2Info(
+      categoria: json['Categoria'],
+      nombre: json['Nombre'],
+      precio: json['Precio'],
+      cantidad: json['cantidad'],
+    );
+  }
+}
+
+
+
 
 class ArticulosInfoAPI {
   final String categoria;
@@ -78,7 +98,7 @@ class ArticulosInfoAPI {
 class PublicacionInfo {
   final String docuID;
   final String creador;
-  final int valor;
+  final double valor;
   final String mandadero;
   final List<ArticulosInfo> productos;
 
@@ -86,6 +106,26 @@ class PublicacionInfo {
 
   factory PublicacionInfo.fromJson(Map<String, dynamic> json) {
     return PublicacionInfo(
+      creador: json['NombreCreador'],
+      valor: json['Valor'],
+      mandadero: json['mandadero'],
+      productos: json['Productos'],      
+
+    );
+  }
+}
+
+class Publicacion2Info {
+  final String docuID;
+  final String creador;
+  final double valor;
+  final String mandadero;
+  final List<ArticulosInfo> productos;
+
+  Publicacion2Info({this.docuID,this.creador, this.valor, this.mandadero, this.productos});
+
+  factory Publicacion2Info.fromJson(Map<String, dynamic> json) {
+    return Publicacion2Info(
       creador: json['NombreCreador'],
       valor: json['Valor'],
       mandadero: json['mandadero'],

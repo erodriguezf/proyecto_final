@@ -51,8 +51,10 @@ class _AgregarMiListaState extends State<AgregarMiLista> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             onPressed: () {
-                              resbusqueda.clear();
-                              buscar(context);
+                              setState(() {
+                                resbusqueda.clear();
+                                buscar(context);
+                              });
                             },
                             child: Row(
                               children: <Widget>[
@@ -76,7 +78,8 @@ class _AgregarMiListaState extends State<AgregarMiLista> {
                         qery = "https://frutiland.herokuapp.com/search?q=";
                       });
                     },
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Icon(Icons.search),
                         Text("Buscar productos")
@@ -107,8 +110,10 @@ class _AgregarMiListaState extends State<AgregarMiLista> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Carrito(carrito)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Carrito(carrito)));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -127,6 +132,13 @@ class _AgregarMiListaState extends State<AgregarMiLista> {
     traerArticulos(busqueda.text, qery).then((resbq) {
       resbusqueda = resbq;
     });
+    if (resbusqueda.length < 1) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(
+        'No se encontraron artículos',
+        style: TextStyle(fontSize: 20),
+      )));
+    }
   }
 
   Widget _listArticulos() {

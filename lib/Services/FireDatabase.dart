@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:proyecto_final/Services/RequestStructure.dart';
 
 class DatabaseThings {
   QuerySnapshot logUSDB;
@@ -89,6 +90,30 @@ class DatabaseThings {
       ])
     });
     print("agregado");
+  }
+    subirinfoPublicacion(Publicacion2Info mapadepublicacion2, String estado,List<Map<String,String>> prod) {
+       // List<Map<String,String>> l = mapadepublicacion2.productos;
+            Map<String, dynamic> mapadepublicacion = {
+        "NombreCreador": mapadepublicacion2.creador,
+        "Productos": prod,
+        "Valor": mapadepublicacion2.valor,
+        "estado": estado,
+        "mandadero": ""
+      };
+      print("aqui");
+    Firestore.instance
+        .collection("publicaciones")
+        .add(mapadepublicacion)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+  
+    Future buscarPublicacionesMandadero(String nombre,String lguser) async {
+    return await Firestore.instance
+        .collection("publicaciones")
+        .where('NombreCreador', isEqualTo: nombre).where('mandadero', isEqualTo: lguser)
+        .getDocuments();
   }
 
   subirinfoUsuario(Map<String, dynamic> mapadeusuario) {

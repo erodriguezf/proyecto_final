@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_final/Models/Persona.dart';
 import 'package:proyecto_final/UI/AgregarMiLista.dart';
 import 'package:proyecto_final/UI/ListaDeAmigos.dart';
+import 'package:proyecto_final/UI/MilistaPropia.dart';
 import 'package:proyecto_final/UI/NavDrawer.dart';
 
 var contexth;
@@ -14,7 +15,7 @@ class MisListas extends StatefulWidget {
 class MisListasState extends State<MisListas> {
   List<Persona> amix = new List<Persona>();
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     contexth = context;
     return Scaffold(
       drawer: NavDrawer(),
@@ -26,17 +27,17 @@ class MisListasState extends State<MisListas> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(80,30,30,30),
+              padding: const EdgeInsets.fromLTRB(80, 30, 30, 30),
               child: Row(
                 children: <Widget>[
                   FloatingActionButton(
-                    heroTag: "btn1",
+                      heroTag: "btn1",
                       backgroundColor: Colors.red[400],
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AgregarMiLista()));                        
+                                builder: (context) => AgregarMiLista()));
                       },
                       tooltip: 'Agregar lista de compras',
                       child: new Icon(Icons.list)),
@@ -45,23 +46,44 @@ class MisListasState extends State<MisListas> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(80,50,30,50),
+              padding: const EdgeInsets.fromLTRB(80, 50, 30, 50),
               child: Row(
                 children: <Widget>[
                   FloatingActionButton(
-                    heroTag: "btn2",
+                      heroTag: "btn3",
                       backgroundColor: Colors.red[400],
                       onPressed: () {
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => ListaDeAmigos()));                      
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Milistapropia()));
+                      },
+                      tooltip: 'Mi lista',
+                      child: new Icon(Icons.view_list)),
+                  Text("   Mi lista")
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(80, 50, 30, 50),
+              child: Row(
+                children: <Widget>[
+                  FloatingActionButton(
+                      heroTag: "btn2",
+                      backgroundColor: Colors.red[400],
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ListaDeAmigos()));
                       },
                       tooltip: 'Historial de listas compras',
                       child: new Icon(Icons.history)),
                   Text("   Historial de listas compras")
                 ],
               ),
-            ),           
+            ),
           ],
-      
         ),
       ),
     );
