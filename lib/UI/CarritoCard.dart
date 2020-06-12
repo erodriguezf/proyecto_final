@@ -4,20 +4,20 @@ import 'package:proyecto_final/Services/FireDatabase.dart';
 import 'package:proyecto_final/Services/RequestStructure.dart';
 import 'package:proyecto_final/UI/AgregarMiLista.dart';
 
-class AgregarArticuloCard extends StatefulWidget {
+class CarritoCard extends StatefulWidget {
   final ArticulosInfoAPI articulo;
-  AgregarArticuloCard(this.articulo);
+  CarritoCard(this.articulo);
   @override
-  AgregarArticuloCardState createState() => AgregarArticuloCardState(this.articulo);
+  CarritoCardState createState() => CarritoCardState(this.articulo);
 }
 
-class AgregarArticuloCardState extends State<AgregarArticuloCard> {
+class CarritoCardState extends State<CarritoCard> {
   ArticulosInfoAPI articulo;
   DatabaseThings fireDB = new DatabaseThings();
-
-  AgregarArticuloCardState(this.articulo);
+  double subtotal;
+  CarritoCardState(this.articulo);
   @override
-  Widget build(BuildContext context) {   
+  Widget build(BuildContext context) {
     return Card(
         color: Colors.red[400],
         elevation: 3,
@@ -31,12 +31,15 @@ class AgregarArticuloCardState extends State<AgregarArticuloCard> {
             Column(
               children: <Widget>[
                 padding(
-                    Text("Nombre: "+articulo.nombre,
+                    Text("Nombre: " + articulo.nombre,
                         style: TextStyle(color: Colors.white, fontSize: 18.0)),
-                    1),Text("Categoría"+articulo.categoria,
-                        style: TextStyle(color: Colors.white, fontSize: 18.0)),
+                    1),
+                Text("Categoría" + articulo.categoria,
+                    style: TextStyle(color: Colors.white, fontSize: 18.0)),
+                Text("Subtotal: " + articulo.precio.toString(),
+                    style: TextStyle(color: Colors.white, fontSize: 18.0)),
                 padding(
-                    Text("Precio: "+articulo.precio.toString(),
+                    Text("Subtotal: " + subtotal.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 18.0)),
                     2),
               ],
@@ -45,24 +48,19 @@ class AgregarArticuloCardState extends State<AgregarArticuloCard> {
               padding: const EdgeInsets.only(right: 2),
               child: Column(
                 children: <Widget>[
-                  FlatButton(
-                    color: Colors.grey[300],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {  
-                      setState(() {
-                        carrito.add(articulo);
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text('Producto agregado al carrito',style: TextStyle(fontSize: 20),)));                      
-                      });                    
-                    },
-                    child: Icon(Icons.add_shopping_cart),
-                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none, prefixText: "1"),
+                  )
                 ],
               ),
             ),
           ],
         )));
+  }
+
+  void sbtotal(double precio, int cantidad) {
+    subtotal = precio * cantidad;
   }
 
   Widget padding(Widget widget, int t, [String typeTodo]) {

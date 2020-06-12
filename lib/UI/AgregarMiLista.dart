@@ -4,7 +4,10 @@ import 'package:proyecto_final/Services/FireDatabase.dart';
 import 'package:proyecto_final/Services/Frutiland.dart';
 import 'package:proyecto_final/Services/RequestStructure.dart';
 import 'package:proyecto_final/UI/AgregarArticuloCard.dart';
+import 'package:proyecto_final/UI/Carrito.dart';
 import 'package:proyecto_final/UI/NavDrawer.dart';
+
+List<ArticulosInfoAPI> carrito = new List<ArticulosInfoAPI>();
 
 class AgregarMiLista extends StatefulWidget {
   @override
@@ -73,7 +76,7 @@ class _AgregarMiListaState extends State<AgregarMiLista> {
                         qery = "https://frutiland.herokuapp.com/search?q=";
                       });
                     },
-                    child: Row(
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Icon(Icons.search),
                         Text("Buscar productos")
@@ -103,8 +106,12 @@ class _AgregarMiListaState extends State<AgregarMiLista> {
                 color: Colors.grey[500],
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                onPressed: () {},
-                child: Row( mainAxisAlignment: MainAxisAlignment.center,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Carrito(carrito)));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(Icons.shopping_cart),
                     Text("ir al carrito")
